@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import StudentNavbar from "@/components/StudentNavbar";
+import StudentNavbar from "@/components/navigation/StudentNavbar";
 
 const JoinQuiz = () => {
   const router = useRouter();

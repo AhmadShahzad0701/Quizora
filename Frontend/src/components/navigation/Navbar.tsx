@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "./ui/button"; 
+import { Button } from "../ui/button"; 
 import { Menu, X, GraduationCap } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation"; 

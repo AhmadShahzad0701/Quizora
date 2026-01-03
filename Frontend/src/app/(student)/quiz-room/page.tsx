@@ -2,7 +2,7 @@
 
 import { User } from "lucide-react";
 import { Button } from "../../../components/ui/button";
-import StudentNavbar from "../../../components/StudentNavbar";
+import StudentNavbar from "../../../components/navigation/StudentNavbar";
 import Image from "next/image";
 
 interface Participant {

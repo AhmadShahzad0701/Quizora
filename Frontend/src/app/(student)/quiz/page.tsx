@@ -5,7 +5,7 @@ import { QuizCard } from "../../../components/quiz/QuizCard";
 import { RubricsButton } from "../../../components/quiz/RubricsButton";
 import { Question } from "../../../types/quiz";
 import { useToast } from "../../../hooks/use-toast";
-import StudentNavbar from "@/components/StudentNavbar";
+import StudentNavbar from "@/components/navigation/StudentNavbar";
 
 const sampleQuestions: Question[] = [
   {

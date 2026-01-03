@@ -13,7 +13,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navigation/Navbar";
 
 const Home = () => {
   const features = [

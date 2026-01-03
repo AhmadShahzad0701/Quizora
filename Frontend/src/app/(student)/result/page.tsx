@@ -2,7 +2,7 @@
 
 import { CheckCircle, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import StudentNavbar from "@/components/StudentNavbar";
+import StudentNavbar from "@/components/navigation/StudentNavbar";
 import { useRouter } from "next/navigation";
 
 interface QuizResultsProps {
