@@ -1,8 +1,8 @@
 {
   "/(auth)/login/page": "app/(auth)/login/page.js",
   "/(auth)/signup/page": "app/(auth)/signup/page.js",
-  "/(teacher)/create-quiz/page": "app/(teacher)/create-quiz/page.js",
-  "/(teacher)/dashboard/page": "app/(teacher)/dashboard/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
+  "/(student)/join-quiz/page": "app/(student)/join-quiz/page.js",
+  "/(student)/quiz-room/page": "app/(student)/quiz-room/page.js",
+  "/(student)/room-code/page": "app/(student)/room-code/page.js",
   "/page": "app/page.js"
 }
