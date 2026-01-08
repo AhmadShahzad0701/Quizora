@@ -1,4 +1,11 @@
-import { Counter } from "../Counter";
+import {
+  Brain,
+  CheckCircle,
+  Edit3,
+  AlignLeft,
+  Code,
+} from "lucide-react";
+import { QuestionTypeCard } from "../QuestionTypeCard";
 
 interface QuestionCounts {
   mcq: number;
@@ -14,48 +21,72 @@ interface QuestionsSelectionStep3Props {
   onChange: (data: QuestionCounts) => void;
 }
 
-export function QuestionsSelectionStep3({ data, onChange }: QuestionsSelectionStep3Props) {
-  const total = data.mcq + data.fillBlanks + data.trueFalse + data.short + data.long + data.coding;
+export const QuestionsSelectionStep3 = ({
+  data,
+  onChange,
+}: QuestionsSelectionStep3Props) => {
+  const update = (key: string, value: number) => {
+    onChange({ ...data, [key]: value });
+  };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-[hsl(222,47%,11%)]">Questions *</h2>
-        <span className="text-3xl font-bold text-[hsl(222,47%,11%)]">{total}</span>
-      </div>
+    <div>
+      <h2 className="text-xl font-semibold mb-2">
+        Choose Question Types
+      </h2>
+      <p className="text-sm text-muted-foreground mb-6">
+        Select how many questions you want for each type
+      </p>
 
-      <div className="space-y-2 divide-y divide-[hsl(214,32%,91%)]">
-        <Counter
-          label="Multiple Choice Questions"
+      <div className="grid md:grid-cols-2 gap-6">
+        <QuestionTypeCard
+          title="Multiple Choice"
+          description="Best for conceptual and factual testing"
+          icon={<Brain className="w-6 h-6 text-primary" />}
           value={data.mcq}
-          onChange={(value) => onChange({ ...data, mcq: value })}
+          onChange={(v) => update("mcq", v)}
         />
-        <Counter
-          label="Fill in the Blanks"
+
+        <QuestionTypeCard
+          title="Fill in the Blanks"
+          description="Tests recall and understanding"
+          icon={<Edit3 className="w-6 h-6 text-primary" />}
           value={data.fillBlanks}
-          onChange={(value) => onChange({ ...data, fillBlanks: value })}
+          onChange={(v) => update("fillBlanks", v)}
         />
-        <Counter
-          label="True / False"
+
+        <QuestionTypeCard
+          title="True / False"
+          description="Quick concept verification"
+          icon={<CheckCircle className="w-6 h-6 text-primary" />}
           value={data.trueFalse}
-          onChange={(value) => onChange({ ...data, trueFalse: value })}
+          onChange={(v) => update("trueFalse", v)}
         />
-        <Counter
-          label="Short"
+
+        <QuestionTypeCard
+          title="Short Answer"
+          description="Explain briefly in own words"
+          icon={<AlignLeft className="w-6 h-6 text-primary" />}
           value={data.short}
-          onChange={(value) => onChange({ ...data, short: value })}
+          onChange={(v) => update("short", v)}
         />
-        <Counter
-          label="Long"
+
+        <QuestionTypeCard
+          title="Long Answer"
+          description="Detailed explanation and reasoning"
+          icon={<AlignLeft className="w-6 h-6 text-primary" />}
           value={data.long}
-          onChange={(value) => onChange({ ...data, long: value })}
+          onChange={(v) => update("long", v)}
         />
-        <Counter
-          label="Coding"
+
+        <QuestionTypeCard
+          title="Coding Question"
+          description="Problem solving with code"
+          icon={<Code className="w-6 h-6 text-primary" />}
           value={data.coding}
-          onChange={(value) => onChange({ ...data, coding: value })}
+          onChange={(v) => update("coding", v)}
         />
       </div>
     </div>
   );
-}
+};
