@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import TimeControl from "@/components/quiz-session/TimeControl";
 import SecretKey from "@/components/quiz-session/SecretKey";
 import Navbar from "@/components/navigation/SessionNavbar";
+import Link from 'next/link';
 
 const SessionManage = () => {
   const [timeRemaining, setTimeRemaining] = useState(60);
@@ -58,12 +59,14 @@ const SessionManage = () => {
 
           {/* End Quiz Button */}
           <div className="flex justify-center mt-12">
+            <Link href="/dashboard">
             <Button 
               variant="destructive" 
               className="w-full max-w-md"
             >
               End Quiz
             </Button>
+            </Link>
           </div>
         </div>
       </main>

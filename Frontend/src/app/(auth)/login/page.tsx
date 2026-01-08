@@ -54,9 +54,11 @@ export default function LoginPage() {
       </div>
 
       {/* Login Button */}
+      <Link href={"/dashboard"}>
       <Button className="w-full">
         Login
       </Button>
+      </Link>
 
       {/* Footer links */}
       <div className="mt-4 text-center text-sm text-gray-600">

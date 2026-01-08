@@ -73,9 +73,11 @@ export default function SignupPage() {
       </div>
 
       {/* Create Account */}
-      <Button className="w-full">
-        Create Account
-      </Button>
+      <Link href={"/dashboard"}>
+        <Button className="w-full">
+          Create Account
+        </Button>
+      </Link>
 
       {/* Footer link */}
       <div className="mt-4 text-center text-sm text-gray-600">

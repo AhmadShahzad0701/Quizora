@@ -9,6 +9,7 @@ import { NavigationButtons } from "../../../components/teacher-quiz/NavigationBu
 import { ShareModal } from "../../../components/teacher-quiz/ShareModel";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";  
 
 // Step Components
 import { QuizDetailsStep1 } from "../../../components/teacher-quiz/steps/QuizDetailsStep1";
@@ -209,6 +210,9 @@ const Index = () => {
       title: "Quiz Published!",
       description: "Your quiz is now live and ready to be shared with students.",
     });
+
+    // Redirect to the /quiz-session page after publishing the quiz
+    router.push("/quiz-session");
   };
 
   const handleDownload = () => {
@@ -249,6 +253,9 @@ const Index = () => {
     points: parseInt(quizContent.totalMarks) || 2,
     difficulty: quizDetails.difficulty || "easy",
   };
+
+  // Use router for navigation
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-[hsl(210,20%,98%)]">

@@ -31,9 +31,11 @@ export default function VerifyCodePage() {
         Didn’t receive any code? <span className="text-primary cursor-pointer">Resend</span>
       </div>
 
+      <Link href={"/reset-password"}>
       <Button className="w-full">
         Submit
       </Button>
+        </Link>
 
       <div className="mt-4 text-center text-sm">
         <Link href="/login" className="text-primary hover:underline">

@@ -201,9 +201,11 @@ const LiveQuizSession = () => {
             <Button variant="destructive" size="lg" className="px-8">
               End Room
             </Button>
+            <Link href={'/session/leaderboard'}>
             <Button variant="outline" size="lg" className="px-8">
               Start Room
             </Button>
+            </Link>
           </div>
         </div>
       </main>

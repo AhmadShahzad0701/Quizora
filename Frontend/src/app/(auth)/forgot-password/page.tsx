@@ -6,7 +6,6 @@ import Link from "next/link";
 export default function ForgotPasswordPage() {
   return (
     <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
-      
       <div className="mb-6 text-center">
         <h1 className="text-2xl font-semibold text-gray-900">
           Forgot Password
@@ -17,9 +16,7 @@ export default function ForgotPasswordPage() {
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm text-gray-600 mb-1">
-          Email
-        </label>
+        <label className="block text-sm text-gray-600 mb-1">Email</label>
         <input
           type="email"
           placeholder="m@example.com"
@@ -27,9 +24,9 @@ export default function ForgotPasswordPage() {
         />
       </div>
 
-      <Button className="w-full">
-        Send Code
-      </Button>
+      <Link href={"/verify-code"}>
+        <Button className="w-full">Send Code</Button>
+      </Link>
 
       <div className="mt-4 text-center text-sm">
         <Link href="/login" className="text-primary hover:underline">
