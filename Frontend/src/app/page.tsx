@@ -85,10 +85,27 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center space-y-8 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
+            {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
               <Zap className="w-4 h-4" />
               Revolutionizing Educational Assessment
-            </div>
+            </div> */}
+        <Link href="/room-code">
+  <div
+    className="
+      inline-flex items-center gap-2 px-5 py-2 rounded-full
+      bg-gradient-primary text-white
+      text-sm font-semibold
+      shadow-md hover:opacity-90
+      transition cursor-pointer
+    "
+  >
+    <Users className="w-4 h-4" />
+    Join Quiz (Students)
+    <ArrowRight className="w-4 h-4" />
+  </div>
+</Link>
+
+
 
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               <span className="bg-gradient-primary bg-clip-text text-transparent">
@@ -105,7 +122,7 @@ const Home = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Link href="/register">
+              <Link href="/signup">
                 <Button
                   size="lg"
                   className="bg-gradient-primary hover:opacity-90 text-lg px-8 shadow-lg animate-bounce-in"
