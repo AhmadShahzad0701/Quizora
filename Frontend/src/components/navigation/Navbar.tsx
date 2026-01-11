@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "../ui/button"; 
+import { Button } from "../ui/button";
 import { Menu, X, GraduationCap } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation"; 
@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname(); 
+  const pathname = usePathname();
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -19,7 +19,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-b border-border z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-[5%] md:px-[10%]">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
@@ -38,7 +38,7 @@ const Navbar = () => {
                 key={link.path}
                 href={link.path}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === link.path 
+                  pathname === link.path
                     ? "text-primary"
                     : "text-foreground/70"
                 }`}
@@ -80,7 +80,7 @@ const Navbar = () => {
                 href={link.path}
                 onClick={() => setIsOpen(false)}
                 className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                  pathname === link.path 
+                  pathname === link.path
                     ? "bg-primary/10 text-primary"
                     : "text-foreground/70 hover:bg-muted hover:text-foreground"
                 }`}
