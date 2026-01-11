@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { ProgressBar } from "../../../components/teacher-quiz/ProgessBar";
@@ -23,6 +24,13 @@ import { PreviewStep } from "../../../components/teacher-quiz/steps/PreviewStep"
 import { PublishStep } from "../../../components/teacher-quiz/steps/PublishStep";
 import Navbar from "@/components/navigation/Navbar";
 import { EditQuestionModal } from "../../../components/teacher-quiz/EditQuestionModal";
+
+
+import { generateQuiz } from "../../../services/quizservice";
+
+
+
+
 
 // Define the Question type
 interface Question {
@@ -205,15 +213,32 @@ const Index = () => {
     }
   };
 
-  const handlePublish = () => {
-    toast({
-      title: "Quiz Published!",
-      description: "Your quiz is now live and ready to be shared with students.",
-    });
-
-    // Redirect to the /quiz-session page after publishing the quiz
-    router.push("/quiz-session");
+  const handlePublish = async () => {
+  const payload = {
+    metadata: {
+      title: quizDetails.title,
+      subject: quizDetails.subject,
+      difficulty: quizDetails.difficulty,
+    },
+    config: {
+      total_questions: Number(quizContent.numberOfQuestions),
+      question_types: {
+        mcq: questionCounts.mcq,
+        true_false: questionCounts.trueFalse,
+        short: questionCounts.short,
+        long: questionCounts.long,
+      },
+    },
   };
+
+  try {
+    const result = await generateQuiz(payload);
+    console.log("AI GENERATED QUIZ:", result);
+  } catch (error) {
+    console.error("Quiz generation failed:", error);
+  }
+};
+
 
   const handleDownload = () => {
     toast({
