@@ -369,7 +369,7 @@ const Index = () => {
               ? "Publish Quiz"
               : currentMainStep === 2 && step2SubStep === 1
               ? "Download Quiz"
-              : "Next"
+              : "Next 2" 
           }
           additionalButtons={
             currentMainStep === 4 || (currentMainStep === 2 && step2SubStep === 1) ? (
