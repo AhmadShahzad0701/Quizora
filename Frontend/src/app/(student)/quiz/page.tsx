@@ -6,8 +6,10 @@ import { RubricsButton } from "../../../components/quiz/RubricsButton";
 import { Question } from "../../../types/quiz";
 import { useToast } from "../../../hooks/use-toast";
 import StudentNavbar from "@/components/navigation/StudentNavbar";
+import RubricsModal from "@/components/quiz/RubricsModal"; // Import RubricsModal
 
 const sampleQuestions: Question[] = [
+  // Sample questions structure here
   {
     id: "1",
     type: "mcq",
@@ -75,9 +77,8 @@ hours: 0, minutes: 0, seconds: 0 });
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(
-    new Set()
-  );
+  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(new Set());
+  const [isRubricsModalOpen, setIsRubricsModalOpen] = useState(false); // State to manage the modal visibility
   const { toast } = useToast();
 
   const currentQuestion = sampleQuestions[currentQuestionIndex];
@@ -133,15 +134,15 @@ const Quiz = () => {
   };
 
   const handleReadRubrics = () => {
-    toast({
-      title: "Opening Rubrics",
-      description: "Displaying rubrics for this question.",
-    });
+    setIsRubricsModalOpen(true); // Open the rubrics modal
+  };
+
+  const handleCloseRubrics = () => {
+    setIsRubricsModalOpen(false); // Close the rubrics modal
   };
 
   // Calculate progress percentage
-  const progressPercentage =
-    ((currentQuestionIndex + 1) / sampleQuestions.length) * 100;
+  const progressPercentage = ((currentQuestionIndex + 1) / sampleQuestions.length) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 to-green-200 flex flex-col">
@@ -171,6 +172,9 @@ const Quiz = () => {
 
         <RubricsButton onClick={handleReadRubrics} />
       </main>
+
+      {/* Render Rubrics Modal */}
+      <RubricsModal isOpen={isRubricsModalOpen} onClose={handleCloseRubrics} />
     </div>
   );
 };

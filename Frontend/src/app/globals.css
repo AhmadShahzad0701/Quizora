@@ -5,6 +5,9 @@
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
+body {
+  user-select: none;
+}
 
 @layer base {
   :root {
@@ -127,3 +130,4 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
