@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quizora – Quiz Evaluation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            padding: 30px;
+        }
+        .card {
+            max-width: 1100px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+        input[type=file] {
+            margin: 15px 0;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            background: #2563eb;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .question-card {
+            background: #ecfeff;
+            border-left: 6px solid #06b6d4;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .answer {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .student {
+            background: #fff7ed;
+            border-left: 4px solid #f59e0b;
+        }
+        .correct {
+            background: #ecfdf5;
+            border-left: 4px solid #22c55e;
+        }
+        .marks {
+            font-weight: bold;
+            color: #16a34a;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>📘 Quizora – Evaluate Quiz JSON</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="quiz_file" accept=".json" required>
+        <br>
+        <button type="submit">Upload & Evaluate</button>
+    </form>
+
+    {% if result %}
+    <div class="summary">
+        <div><b>Student:</b> {{ result.student_id }}</div>
+        <div><b>Quiz:</b> {{ result.quiz_id }}</div>
+        <div><b>Percentage:</b> {{ result.percentage }}%</div>
+        <div><b>Grade:</b> {{ result.grade }}</div>
+    </div>
+
+    {% for r in result.results %}
+    <div class="question-card">
+        <h3>Q{{ r.qid }}: {{ r.question }}</h3>
+
+        <p><b>Student Answer:</b></p>
+        <div class="answer student">{{ r.student_answer }}</div>
+
+        <p><b>Correct Answer:</b></p>
+        <div class="answer correct">{{ r.correct_answer }}</div>
+
+        <p class="marks">Score: {{ r.score }} / {{ r.out_of }}</p>
+
+        <p class="feedback">Feedback: {{ r.feedback }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+</body>
+</html>

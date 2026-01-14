@@ -1,0 +1,38 @@
+{
+  "student_id": "ST002",
+  "quiz_id": "QZ_AI_02",
+  "questions": [
+    {
+      "qid": "1",
+      "qtype": "Short",
+      "question": "What is Artificial Intelligence?",
+      "correct_answer": "Artificial Intelligence is the field of computer science that deals with intelligent machines.",
+      "student_answer": "",
+      "marks": 5
+    },
+    {
+      "qid": "2",
+      "qtype": "FIB",
+      "question": "DFS uses a ______ data structure.",
+      "correct_answer": "Stack",
+      "student_answer": "Queue",
+      "marks": 2
+    },
+    {
+      "qid": "3",
+      "qtype": "MCQ",
+      "question": "Which algorithm uses a heuristic function?",
+      "correct_answer": "A*",
+      "student_answer": "BFS",
+      "marks": 2
+    },
+    {
+      "qid": "4",
+      "qtype": "Long",
+      "question": "Explain Breadth First Search (BFS).",
+      "correct_answer": "Breadth First Search explores nodes level by level using a queue.",
+      "student_answer": "I don't know.",
+      "marks": 10
+    }
+  ]
+}

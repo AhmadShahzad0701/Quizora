@@ -1,0 +1,48 @@
+{
+  "student_id": "ST001",
+  "quiz_id": "QZ002",
+  "subject": "Artificial Intelligence",
+  "topic": "Search Algorithms",
+  "questions": [
+    {
+      "qid": "1",
+      "qtype": "Short",
+      "question": "What is Artificial Intelligence?",
+      "correct_answer": "Artificial Intelligence is the field of computer science that focuses on creating intelligent machines.",
+      "student_answer": "Artificial Intelligence is a branch of computer science that makes machines intelligent.",
+      "marks": 5
+    },
+    {
+      "qid": "2",
+      "qtype": "FIB",
+      "question": "BFS uses a ______ data structure.",
+      "correct_answer": "Queue",
+      "student_answer": "Queue",
+      "marks": 2
+    },
+    {
+      "qid": "3",
+      "qtype": "MCQ",
+      "question": "Which algorithm guarantees the shortest path in an unweighted graph?",
+      "correct_answer": "BFS",
+      "student_answer": "BFS",
+      "marks": 2
+    },
+    {
+      "qid": "4",
+      "qtype": "Long",
+      "question": "Explain Breadth First Search (BFS).",
+      "correct_answer": "Breadth First Search explores nodes level by level using a queue and guarantees the shortest path in an unweighted graph.",
+      "student_answer": "Breadth First Search is a graph traversal algorithm that visits nodes level by level using a queue.",
+      "marks": 10
+    },
+    {
+      "qid": "5",
+      "qtype": "Long",
+      "question": "Explain Depth First Search (DFS) with advantages and disadvantages.",
+      "correct_answer": "Depth First Search explores nodes deeply before backtracking using a stack or recursion. It uses less memory but does not guarantee shortest path.",
+      "student_answer": "Depth First Search goes deep into the graph before backtracking. It uses stack or recursion. It requires less memory but may not find shortest path.",
+      "marks": 10
+    }
+  ]
+}
