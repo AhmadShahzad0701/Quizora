@@ -71,17 +71,17 @@ const TeacherDashboard = () => {
 
   const quickActions = [
     {
-      title: "Create Quiz",
+      title: "Create AI-Quiz",
       description: "Generate AI-powered quizzes",
       icon: Plus,
       link: "/create-quiz",
       color: "bg-gradient-primary",
     },
     {
-      title: "AI Generator",
-      description: "Auto-create from documents",
+      title: "Templates",
+      description: "Reusable Ready Template Quiz",
       icon: Brain,
-      link: "/quiz/ai-generate",
+      link: "/templates",
       color: "bg-gradient-secondary",
     },
     {
@@ -104,7 +104,7 @@ const TeacherDashboard = () => {
             <div>
               <h1 className="text-4xl font-bold mb-2">Welcome back, Professor!</h1>
               <p className="text-muted-foreground text-lg">
-                Here's what's happening with your classes today
+                Here is what happening with your classes today
               </p>
             </div>
             <Link href="/create-quiz"> 
@@ -226,10 +226,10 @@ const TeacherDashboard = () => {
             <div className="relative z-10 flex items-center justify-between">
               <div className="space-y-2">
                 <h3 className="text-2xl font-bold text-white">
-                  You're on fire! 🔥
+                  You are on fire! 🔥
                 </h3>
                 <p className="text-white/90">
-                  You've saved 24 hours this month using AI-powered grading
+                  You have saved 24 hours this month using AI-powered grading
                 </p>
               </div>
               <Award className="w-24 h-24 text-white/20 absolute right-8" />
