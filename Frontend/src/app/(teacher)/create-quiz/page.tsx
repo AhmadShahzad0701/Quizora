@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { ProgressBar } from "../../../components/teacher-quiz/ProgessBar";
@@ -10,7 +9,7 @@ import { NavigationButtons } from "../../../components/teacher-quiz/NavigationBu
 import { ShareModal } from "../../../components/teacher-quiz/ShareModel";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";  
+import { useRouter } from "next/navigation";
 
 // Step Components
 import { QuizDetailsStep1 } from "../../../components/teacher-quiz/steps/QuizDetailsStep1";
@@ -25,12 +24,7 @@ import { PublishStep } from "../../../components/teacher-quiz/steps/PublishStep"
 import Navbar from "@/components/navigation/Navbar";
 import { EditQuestionModal } from "../../../components/teacher-quiz/EditQuestionModal";
 
-
 import { generateQuiz } from "../../../services/quizservice";
-
-
-
-
 
 // Define the Question type
 interface Question {
@@ -38,8 +32,8 @@ interface Question {
   type: string;
   points: number;
   text: string;
-  answer?: string;  // Optional for question types like True/False and Fill-in-the-blanks
-  options?: string[];  // Optional for MCQs
+  answer?: string; // Optional for question types like True/False and Fill-in-the-blanks
+  options?: string[]; // Optional for MCQs
 }
 
 const mainSteps = [
@@ -120,15 +114,40 @@ const Index = () => {
 
   // Generated questions
   const [questions, setQuestions] = useState<Question[]>([
-    { id: 1, type: "True / False", points: 2, text: "Time Complexity of DFS is more", answer: "True" },
-    { id: 2, type: "True / False", points: 2, text: "Time Complexity of DFS is more" },
-    { id: 7, type: "Fill in the Blanks", points: 1, text: "Java is a __________ Language." },
-    { id: 8, type: "MCQ", points: 2, text: "What is the capital of France?", options: ["Paris", "London", "Rome", "Berlin"], answer: "Paris" },
+    {
+      id: 1,
+      type: "True / False",
+      points: 2,
+      text: "Time Complexity of DFS is more",
+      answer: "True",
+    },
+    {
+      id: 2,
+      type: "True / False",
+      points: 2,
+      text: "Time Complexity of DFS is more",
+    },
+    {
+      id: 7,
+      type: "Fill in the Blanks",
+      points: 1,
+      text: "Java is a __________ Language.",
+    },
+    {
+      id: 8,
+      type: "MCQ",
+      points: 2,
+      text: "What is the capital of France?",
+      options: ["Paris", "London", "Rome", "Berlin"],
+      answer: "Paris",
+    },
   ]);
 
   // Modal state
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
+  const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
+    null
+  );
 
   // Handle editing a question
   const handleEditQuestion = (id: number) => {
@@ -214,31 +233,30 @@ const Index = () => {
   };
 
   const handlePublish = async () => {
-  const payload = {
-    metadata: {
-      title: quizDetails.title,
-      subject: quizDetails.subject,
-      difficulty: quizDetails.difficulty,
-    },
-    config: {
-      total_questions: Number(quizContent.numberOfQuestions),
-      question_types: {
-        mcq: questionCounts.mcq,
-        true_false: questionCounts.trueFalse,
-        short: questionCounts.short,
-        long: questionCounts.long,
+    const payload = {
+      metadata: {
+        title: quizDetails.title,
+        subject: quizDetails.subject,
+        difficulty: quizDetails.difficulty,
       },
-    },
+      config: {
+        total_questions: Number(quizContent.numberOfQuestions),
+        question_types: {
+          mcq: questionCounts.mcq,
+          true_false: questionCounts.trueFalse,
+          short: questionCounts.short,
+          long: questionCounts.long,
+        },
+      },
+    };
+
+    try {
+      const result = await generateQuiz(payload);
+      console.log("AI GENERATED QUIZ:", result);
+    } catch (error) {
+      console.error("Quiz generation failed:", error);
+    }
   };
-
-  try {
-    const result = await generateQuiz(payload);
-    console.log("AI GENERATED QUIZ:", result);
-  } catch (error) {
-    console.error("Quiz generation failed:", error);
-  }
-};
-
 
   const handleDownload = () => {
     toast({
@@ -279,9 +297,32 @@ const Index = () => {
     difficulty: quizDetails.difficulty || "easy",
   };
 
+  const getNextButtonState = () => {
+    let label = "Next";
+    let onClick = handleNext;
+    let showDownload = false;
+    // ✅ STEP 1 → SUBSTEP 3
+  if (currentMainStep === 1 && step1SubStep === 3) {
+    label = "Create Quiz";
+  }
+
+    if (currentMainStep === 4) {
+      label = "Publish Quiz";
+      onClick = handlePublish;
+      showDownload = true;
+    }
+
+    if (currentMainStep === 2 && step2SubStep === 1) {
+      label = "Download Quiz";
+      showDownload = true;
+    }
+
+    return { label, onClick, showDownload };
+  };
+
   // Use router for navigation
   const router = useRouter();
-
+  const nextBtn = getNextButtonState();
   return (
     <div className="min-h-screen bg-[hsl(210,20%,98%)]">
       <Navbar />
@@ -298,7 +339,9 @@ const Index = () => {
         <h1 className="text-3xl font-bold mb-2 text-[hsl(222,47%,11%)]">
           {getPageTitle()}
         </h1>
-        <p className="text-[hsl(215,16%,47%)] mb-6">Follow the steps to create the quiz</p>
+        <p className="text-[hsl(215,16%,47%)] mb-6">
+          Follow the steps to create the quiz
+        </p>
 
         <div className="mb-8">
           <ProgressBar progress={calculateProgress()} />
@@ -330,7 +373,10 @@ const Index = () => {
             ) : step1SubStep === 2 ? (
               <QuizContentStep2 data={quizContent} onChange={setQuizContent} />
             ) : (
-              <QuestionsSelectionStep3 data={questionCounts} onChange={setQuestionCounts} />
+              <QuestionsSelectionStep3
+                data={questionCounts}
+                onChange={setQuestionCounts}
+              />
             )
           ) : currentMainStep === 2 ? (
             step2SubStep === 1 ? (
@@ -339,10 +385,15 @@ const Index = () => {
                 isPublic={isPublic}
                 onTogglePublic={setIsPublic}
                 onEditQuestion={handleEditQuestion}
-                onDeleteQuestion={(id) => setQuestions(questions.filter((q) => q.id !== id))}
+                onDeleteQuestion={(id) =>
+                  setQuestions(questions.filter((q) => q.id !== id))
+                }
               />
             ) : step2SubStep === 2 ? (
-              <MarkingStyleStep data={evaluationCriteria} onChange={setEvaluationCriteria} />
+              <MarkingStyleStep
+                data={evaluationCriteria}
+                onChange={setEvaluationCriteria}
+              />
             ) : (
               <RubricsStep data={rubricsData} onChange={setRubricsData} />
             )
@@ -361,18 +412,12 @@ const Index = () => {
 
         <NavigationButtons
           onPrevious={handlePrevious}
-          onNext={currentMainStep === 4 ? handlePublish : handleNext}
+          onNext={nextBtn.onClick}
           showPrevious={!(currentMainStep === 1 && step1SubStep === 1)}
           showNext={!isGenerating}
-          nextLabel={
-            currentMainStep === 4
-              ? "Publish Quiz"
-              : currentMainStep === 2 && step2SubStep === 1
-              ? "Download Quiz"
-              : "Next 2" 
-          }
+          nextLabel={nextBtn.label}
           additionalButtons={
-            currentMainStep === 4 || (currentMainStep === 2 && step2SubStep === 1) ? (
+            nextBtn.showDownload ? (
               <Button variant="outline" onClick={handleDownload}>
                 Download Quiz
               </Button>
@@ -381,12 +426,11 @@ const Index = () => {
         />
 
         <EditQuestionModal
-            isOpen={isEditModalOpen}
-            question={selectedQuestion}
-            onClose={handleCloseModal}
-            onSave={handleSaveQuestion}
+          isOpen={isEditModalOpen}
+          question={selectedQuestion}
+          onClose={handleCloseModal}
+          onSave={handleSaveQuestion}
         />
-
       </main>
 
       <ShareModal
