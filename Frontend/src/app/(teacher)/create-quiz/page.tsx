@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/components/navigation/Navbar";
+import TeacherNavbar from "@/components/navigation/TeacherNavbar";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +14,7 @@ import { EditQuestionModal } from "../../../components/teacher-quiz/EditQuestion
 import {
   QuizDetailsStep1,
   QuizContentStep2,
-  QuestionsSelectionStep3,
+  QuizContentStep3,
   GeneratingQuizStep,
   AddQuestionsStep,
   MarkingStyleStep,
@@ -31,7 +31,7 @@ const Page = () => {
 
   return (
     <div className="min-h-screen bg-[hsl(210,20%,98%)]">
-      <Navbar />
+      <TeacherNavbar />
 
       <main className="container py-6 pt-24">
         {/* Back */}
@@ -78,15 +78,24 @@ const Page = () => {
                 onChange={q.setQuizDetails}
               />
             ) : q.step1SubStep === 2 ? (
-              <QuizContentStep2
-                data={q.quizContent}
-                onChange={q.setQuizContent}
-              />
+                          <QuizContentStep2
+              timeLimit={q.quizContent.timeLimit}
+              numberOfQuestions={q.quizContent.numberOfQuestions}
+              totalMarks={q.quizContent.totalMarks}
+              questionCounts={q.questionCounts}
+              onChangeMeta={(meta) =>
+                q.setQuizContent({ ...q.quizContent, ...meta })
+              }
+              onChangeQuestions={q.setQuestionCounts}
+            />
+
             ) : (
-              <QuestionsSelectionStep3
-                data={q.questionCounts}
-                onChange={q.setQuestionCounts}
-              />
+<QuizContentStep3
+  data={{ content: q.quizContent.content }}
+  onChange={(data) =>
+    q.setQuizContent({ ...q.quizContent, content: data.content })
+  }
+/>
             )
           ) : q.currentMainStep === 2 ? (
             q.step2SubStep === 1 ? (

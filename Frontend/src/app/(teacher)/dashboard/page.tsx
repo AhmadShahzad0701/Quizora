@@ -9,7 +9,6 @@ import {
   Award,
   Brain,
 } from "lucide-react";
-// import Navbar from "../../../components/navigation/Navbar";
 import TeacherNavbar from "@/components/navigation/TeacherNavbar";
 
 import Link from "next/link";
@@ -96,7 +95,6 @@ const TeacherDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* <Navbar /> */}
       <TeacherNavbar />
 
       <main className="pt-20 pb-12 px-4">
@@ -244,6 +242,17 @@ const TeacherDashboard = () => {
                             quiz.status.slice(1)}
                         </span>
                       </div>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${quiz.status === "completed"
+                            ? "bg-success/10 text-success"
+                            : quiz.status === "active"
+                              ? "bg-primary/10 text-primary"
+                              : "bg-accent/10 text-accent"
+                          }`}
+                      >
+                        {quiz.status.charAt(0).toUpperCase() +
+                          quiz.status.slice(1)}
+                      </span>
                     </div>
                   </div>
                 </Card>
