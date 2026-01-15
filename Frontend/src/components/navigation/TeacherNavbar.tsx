@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const teacherLinks = [
-  { name: "Dashboard", path: "/teacher", icon: LayoutDashboard },
+  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { name: "Sessions", path: "/teacher/session", icon: BookOpen },
   { name: "My Quizzes", path: "/teacher/quiz-session", icon: Brain },
   { name: "Templates", path: "/teacher/templates", icon: BookOpen },

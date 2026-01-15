@@ -5,7 +5,6 @@ import {
   BookOpen,
   BarChart3,
   Users,
-  Clock,
   TrendingUp,
   Award,
   Brain,
@@ -98,11 +97,10 @@ const TeacherDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* <Navbar /> */}
-     <TeacherNavbar />
+      <TeacherNavbar />
 
       <main className="pt-20 pb-12 px-4">
         <div className="max-w-7xl mx-auto space-y-10">
-
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
@@ -114,7 +112,10 @@ const TeacherDashboard = () => {
               </p>
             </div>
             <Link href="/create-quiz">
-              <Button size="lg" className="bg-gradient-primary hover:opacity-90">
+              <Button
+                size="lg"
+                className="bg-gradient-primary hover:opacity-90"
+              >
                 <Plus className="w-5 h-5 mr-2" />
                 Create New Quiz
               </Button>
@@ -133,12 +134,8 @@ const TeacherDashboard = () => {
                     <p className="text-xs uppercase tracking-wide text-muted-foreground">
                       {stat.label}
                     </p>
-                    <p className="text-2xl font-semibold">
-                      {stat.value}
-                    </p>
-                    <p className="text-xs text-success">
-                      {stat.change}
-                    </p>
+                    <p className="text-2xl font-semibold">{stat.value}</p>
+                    <p className="text-xs text-success">{stat.change}</p>
                   </div>
                   <div className={`p-2.5 rounded-lg bg-muted ${stat.color}`}>
                     <stat.icon className="w-5 h-5" />
@@ -177,57 +174,76 @@ const TeacherDashboard = () => {
           </div>
 
           {/* Recent Quizzes */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-xl font-semibold">Recent Quizzes</h2>
-              <Link href="/quizzes">
-                <Button variant="ghost">View All</Button>
+          <div className="mt-6">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold tracking-tight">
+                Recent Quizzes
+              </h2>
+              <Link href="/results">
+                <Button variant="ghost" className="text-sm">
+                  View All
+                </Button>
               </Link>
             </div>
 
-            <div className="space-y-3">
+            {/* Quiz List */}
+            <div className="space-y-4">
               {recentQuizzes.map((quiz, index) => (
-                <Card key={index} className="p-5 hover:shadow-md">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="p-3 bg-muted rounded-lg">
+                <Card
+                  key={index}
+                  className="p-5 border transition-all duration-200 hover:shadow-md"
+                >
+                  <div className="flex items-center gap-6">
+                    {/* LEFT SECTION */}
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                      <div className="p-3 rounded-lg bg-muted flex items-center justify-center">
                         <BookOpen className="w-5 h-5 text-primary" />
                       </div>
-                      <div>
-                        <h3 className="text-base font-medium">
+
+                      <div className="truncate">
+                        <h3 className="text-base font-medium truncate">
                           {quiz.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground truncate">
                           {quiz.subject}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-8">
-                      <div className="text-center">
-                        <p className="text-xs text-muted-foreground">Students</p>
-                        <p className="text-lg font-semibold">
-                          {quiz.students}
+                    {/* RIGHT SECTION (GRID – FIXED LAYOUT) */}
+                    <div className="grid grid-cols-3 gap-8 items-center">
+                      {/* Students */}
+                      <div className="text-center w-[80px]">
+                        <p className="text-xs text-muted-foreground">
+                          Students
                         </p>
+                        <p className="text-lg font-semibold">{quiz.students}</p>
                       </div>
-                      <div className="text-center">
+
+                      {/* Score */}
+                      <div className="text-center w-[80px]">
                         <p className="text-xs text-muted-foreground">Score</p>
                         <p className="text-lg font-semibold text-success">
                           {quiz.avgScore}%
                         </p>
                       </div>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          quiz.status === "completed"
-                            ? "bg-success/10 text-success"
-                            : quiz.status === "active"
-                            ? "bg-primary/10 text-primary"
-                            : "bg-accent/10 text-accent"
-                        }`}
-                      >
-                        {quiz.status.charAt(0).toUpperCase() +
-                          quiz.status.slice(1)}
-                      </span>
+
+                      {/* Status (FIXED WIDTH) */}
+                      <div className="flex justify-center">
+                        <span
+                          className={`w-[90px] text-center px-3 py-1 rounded-full text-xs font-medium ${
+                            quiz.status === "completed"
+                              ? "bg-success/10 text-success"
+                              : quiz.status === "active"
+                              ? "bg-primary/10 text-primary"
+                              : "bg-accent/10 text-accent"
+                          }`}
+                        >
+                          {quiz.status.charAt(0).toUpperCase() +
+                            quiz.status.slice(1)}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Card>
@@ -240,7 +256,7 @@ const TeacherDashboard = () => {
             <div className="relative z-10 flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-semibold text-white mb-1">
-                  You’re doing great! 🚀
+                  You’re doing great!
                 </h3>
                 <p className="text-sm text-white/90">
                   You saved 24 hours this month using AI-powered grading
@@ -249,7 +265,6 @@ const TeacherDashboard = () => {
               <Award className="w-20 h-20 text-white/20 absolute right-6" />
             </div>
           </Card>
-
         </div>
       </main>
     </div>
