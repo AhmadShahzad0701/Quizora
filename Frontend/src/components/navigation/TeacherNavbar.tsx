@@ -18,11 +18,6 @@ const teacherLinks = [
   { name: "My Quizzes", path: "/teacher/quiz-session", icon: Brain },
   { name: "Templates", path: "/teacher/templates", icon: BookOpen },
   { name: "Analytics", path: "/teacher/analytics", icon: BarChart3 },
-    { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-    { name: "Sessions", path: "/teacher/session", icon: BookOpen },
-    { name: "My Quizzes", path: "/templates", icon: Brain },
-    { name: "Templates", path: "/templates", icon: BookOpen },
-    { name: "Analytics", path: "/analytics", icon: BarChart3 },
 ];
 
 const TeacherNavbar = () => {
