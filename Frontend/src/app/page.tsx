@@ -275,7 +275,29 @@ const Home = () => {
           </div>
         </div>
       </section>
+{/* Pricing Redirect Section */}
+<section className="py-20 px-4 bg-muted/40">
+  <div className="max-w-5xl mx-auto text-center space-y-6">
+    <h2 className="text-4xl md:text-5xl font-bold">
+      Simple & Flexible Pricing
+    </h2>
 
+    <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+      Choose a plan that fits your needs — from individual educators to
+      institutions.
+    </p>
+
+    <Link href="/plans">
+      <Button
+        size="lg"
+        className="bg-gradient-primary hover:opacity-90 text-lg px-10 shadow-lg"
+      >
+        View Plans
+        <ArrowRight className="ml-2 w-5 h-5" />
+      </Button>
+    </Link>
+  </div>
+</section>
       {/* CTA Section */}
       <section className="py-20 px-4 bg-gradient-hero relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/10"></div>
