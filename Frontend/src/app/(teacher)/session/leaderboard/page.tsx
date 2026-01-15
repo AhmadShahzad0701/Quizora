@@ -5,6 +5,7 @@ import { X, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Podium from "@/components/quiz-session/Podium";
 import { QuizTable, QuizTableRow } from "@/components/quiz-session/QuizTable";
+import ScoreBar from "@/components/quiz-session/ScoreBar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Navbar from "@/components/navigation/SessionNavbar";
 
@@ -18,29 +19,22 @@ const leaderboardData = Array.from({ length: 6 }, (_, i) => ({
   rank: i + 4,
   name: "Asad",
   id: "221400089",
-  solved: 15 - i,
-  correct: 7 - i,
-  wrong: 8,
-  pending: 8,
+  score: 75 - (i * 12),
 }));
 
 const columns = [
   { key: "rank", label: "Rank" },
   { key: "username", label: "User name" },
-  { key: "solved", label: "Solved", className: "text-center" },
-  { key: "correct", label: "Correct", className: "text-center" },
-  { key: "wrong", label: "Wrong", className: "text-center" },
-  { key: "pending", label: "Pending", className: "text-center" },
+  { key: "score", label: "Score" },
 ];
 
 const SessionLeaderboard = () => {
   const [showNotification, setShowNotification] = useState(true);
 
   return (
-    <div className="min-h-screen gradient-background">
+    <div className="min-h-screen bg-gradient-background">
       <Navbar />
       
-      {/* Notification */}
       {showNotification && (
         <div className="fixed top-20 right-6 bg-card rounded-xl border border-border shadow-lg p-4 w-72 animate-slide-in z-50">
           <div className="flex items-start justify-between">
@@ -69,31 +63,26 @@ const SessionLeaderboard = () => {
       )}
 
       <main className="container py-8">
-        {/* Podium */}
         <Podium players={topPlayers} />
 
-        {/* Leaderboard Table */}
         <div className="mt-8">
           <QuizTable columns={columns}>
-            {leaderboardData.map((row, idx) => (
-              <QuizTableRow key={row.rank} columns={6}>
-                <div className="font-semibold">{row.rank}</div>
+            {leaderboardData.map((row) => (
+              <QuizTableRow key={row.rank} columns={3}>
+                <div className="font-semibold text-foreground">{row.rank}</div>
                 <div className="flex items-center gap-3">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src="/placeholder.svg" />
-                    <AvatarFallback className="bg-primary-foreground/20 text-primary-foreground text-xs">
+                    <AvatarFallback className="bg-primary/20 text-primary text-xs">
                       AS
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium">{row.name}</p>
-                    <p className="text-xs text-primary-foreground/70">{row.id}</p>
+                    <p className="font-medium text-foreground">{row.name}</p>
+                    <p className="text-xs text-muted-foreground">{row.id}</p>
                   </div>
                 </div>
-                <div className="text-center font-semibold">{row.solved}</div>
-                <div className="text-center font-semibold">{row.correct}</div>
-                <div className="text-center font-semibold">{row.wrong}</div>
-                <div className="text-center font-semibold">{row.pending}</div>
+                <ScoreBar score={row.score} maxScore={100} />
               </QuizTableRow>
             ))}
           </QuizTable>

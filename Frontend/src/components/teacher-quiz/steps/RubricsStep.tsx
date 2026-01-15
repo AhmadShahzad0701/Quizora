@@ -27,8 +27,9 @@ export function RubricsStep({ data, onChange }: RubricsStepProps) {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-4">
+        <h2 className="text-xs"><span className="font-bold">Note:</span> Rubrics are only valid for Short and Long Questions.</h2>
         <div className="space-y-2">
-          <Label className="font-medium text-lg text-[hsl(222,47%,11%)]">Enter Rubrics *</Label>
+          <Label className="font-medium text-lg text-[hsl(222,47%,11%)]">Enter Rubrics</Label>
           <Input
             placeholder="Enter Rubrics"
             value={data.rubrics}
