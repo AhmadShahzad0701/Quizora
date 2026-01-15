@@ -1,229 +1,155 @@
 "use client";
 
-import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Navbar from "@/components/navigation/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-import { Input } from "@/components/ui/input";
-import { Brain, BookOpen, Timer, Layers, Search } from "lucide-react";
-import Navbar from "@/components/navigation/Navbar";
-=======
-import { Brain, BookOpen, Timer, Layers } from "lucide-react";
-import TeacherNavbar from "@/components/navigation/TeacherNavbar";
->>>>>>> Stashed changes
-=======
-import { Brain, BookOpen, Timer, Layers } from "lucide-react";
-import TeacherNavbar from "@/components/navigation/TeacherNavbar";
->>>>>>> Stashed changes
+import { Brain, Clock, Layers, ArrowLeft } from "lucide-react";
 
-const templates = [
+// 🔹 Dummy data (will be replaced by backend later)
+const TEMPLATE_DATA = [
   {
+    id: "0",
     title: "MCQs – Quick Assessment",
-    description: "10 MCQs, auto-evaluation enabled",
+    description:
+      "A quick MCQ-based assessment designed to test basic understanding with automatic evaluation.",
     questions: 10,
     duration: "15 mins",
-    icon: Brain,
     level: "Beginner",
     category: "MCQ",
+    topics: ["Basics", "Concept Check", "Quick Review"],
   },
   {
+    id: "1",
     title: "Mid-Term Template",
-    description: "Mixed MCQs + Short Questions",
+    description:
+      "A balanced mid-term quiz including MCQs and short descriptive questions.",
     questions: 25,
     duration: "60 mins",
-    icon: BookOpen,
     level: "Intermediate",
     category: "Mixed",
-  },
-  {
-    title: "Timed Practice Quiz",
-    description: "Speed-based assessment template",
-    questions: 20,
-    duration: "20 mins",
-    icon: Timer,
-    level: "Advanced",
-    category: "Timed",
-  },
-  {
-    title: "Concept Check",
-    description: "Conceptual understanding focused quiz",
-    questions: 15,
-    duration: "30 mins",
-    icon: Layers,
-    level: "Beginner",
-    category: "Conceptual",
+    topics: ["Theory", "Problem Solving", "Logic"],
   },
 ];
 
-const TemplatesPage = () => {
-  const [search, setSearch] = useState("");
-  const [level, setLevel] = useState("All");
-  const [category, setCategory] = useState("All");
+const TemplateDetailsPage = () => {
+  const { id } = useParams();
+  const router = useRouter();
 
-  const filteredTemplates = templates.filter((t) => {
+  const template = TEMPLATE_DATA.find((t) => t.id === id);
+
+  if (!template) {
     return (
-<<<<<<< Updated upstream
-      t.title.toLowerCase().includes(search.toLowerCase()) &&
-      (level === "All" || t.level === level) &&
-      (category === "All" || t.category === category)
-=======
-        <div className="min-h-screen bg-background">
-            <TeacherNavbar />
-
-            <main className="pt-20 pb-12 px-4">
-                <div className="max-w-7xl mx-auto space-y-8">
-                    {/* Header */}
-                    <div>
-                        <h1 className="text-4xl font-bold mb-2">Ready-made Templates</h1>
-                        <p className="text-muted-foreground text-lg">
-                            Use prebuilt quiz templates to save time and get started instantly
-                        </p>
-                    </div>
-
-                    {/* Templates Grid */}
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {templates.map((template, index) => (
-                            <Card
-                                key={index}
-                                className="p-6 hover:shadow-xl transition-all hover:-translate-y-1"
-                            >
-                                <div className="space-y-4">
-                                    {/* Icon */}
-                                    <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center">
-                                        <template.icon className="w-7 h-7 text-white" />
-                                    </div>
-
-                                    {/* Content */}
-                                    <div>
-                                        <h3 className="text-lg font-semibold mb-1">
-                                            {template.title}
-                                        </h3>
-                                        <p className="text-sm text-muted-foreground">
-                                            {template.description}
-                                        </p>
-                                    </div>
-
-                                    {/* Meta */}
-                                    <div className="flex justify-between text-sm text-muted-foreground">
-                                        <span>{template.questions} Questions</span>
-                                        <span>{template.duration}</span>
-                                    </div>
-
-                                    {/* Level */}
-                                    <div>
-                                        <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                                            {template.level}
-                                        </span>
-                                    </div>
-
-                                    {/* Action */}
-                                    <Button className="w-full mt-2">Use Template</Button>
-                                </div>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            </main>
-        </div>
->>>>>>> Stashed changes
+      <div className="p-10 text-center">
+        <p>Template not found</p>
+      </div>
     );
-  });
+  }
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <main className="pt-20 pb-12 px-4">
-        <div className="max-w-7xl mx-auto space-y-8">
+      <main className="pt-24 px-4 pb-16">
+        <div className="max-w-5xl mx-auto space-y-8">
+
+          {/* Back */}
+          <button
+            onClick={() => router.back()}
+            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Templates
+          </button>
+
           {/* Header */}
           <div>
             <h1 className="text-4xl font-bold mb-2">
-              Ready-made Templates
+              {template.title}
             </h1>
             <p className="text-muted-foreground text-lg">
-              Use prebuilt quiz templates to save time and get started instantly
+              {template.description}
             </p>
           </div>
 
-          {/* 🔍 Search + Filters */}
-          <div className="flex flex-col md:flex-row gap-4">
-            {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search templates..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+          {/* Meta Cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Card className="p-4 flex items-center gap-3">
+              <Brain className="text-primary" />
+              <div>
+                <p className="text-sm text-muted-foreground">Level</p>
+                <p className="font-medium">{template.level}</p>
+              </div>
+            </Card>
 
-            {/* Level Filter */}
-            <select
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-              className="h-10 rounded-md border px-3 text-sm"
-            >
-              <option>All</option>
-              <option>Beginner</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
+            <Card className="p-4 flex items-center gap-3">
+              <Clock className="text-primary" />
+              <div>
+                <p className="text-sm text-muted-foreground">Duration</p>
+                <p className="font-medium">{template.duration}</p>
+              </div>
+            </Card>
 
-            {/* Category Filter */}
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="h-10 rounded-md border px-3 text-sm"
-            >
-              <option>All</option>
-              <option>MCQ</option>
-              <option>Mixed</option>
-              <option>Timed</option>
-              <option>Conceptual</option>
-            </select>
+            <Card className="p-4 flex items-center gap-3">
+              <Layers className="text-primary" />
+              <div>
+                <p className="text-sm text-muted-foreground">Questions</p>
+                <p className="font-medium">{template.questions}</p>
+              </div>
+            </Card>
+
+            <Card className="p-4 flex items-center gap-3">
+              <Layers className="text-primary" />
+              <div>
+                <p className="text-sm text-muted-foreground">Category</p>
+                <p className="font-medium">{template.category}</p>
+              </div>
+            </Card>
           </div>
 
-          {/* Templates Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTemplates.map((template, index) => (
-              <Card
-                key={index}
-                className="p-6 hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                <div className="space-y-4">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center">
-                    <template.icon className="w-7 h-7 text-white" />
-                  </div>
+          {/* Topics */}
+          <Card className="p-6">
+            <h3 className="text-xl font-semibold mb-4">
+              Included Topics
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {template.topics.map((topic, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 rounded-full text-sm bg-muted"
+                >
+                  {topic}
+                </span>
+              ))}
+            </div>
+          </Card>
 
-                  <div>
-                    <h3 className="text-lg font-semibold mb-1">
-                      {template.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {template.description}
-                    </p>
-                  </div>
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              size="lg"
+              className="flex-1"
+              onClick={() =>
+                router.push(
+                  `/create-quiz?template=${template.id}`
+                )
+              }
+            >
+              Use & Edit Template
+            </Button>
 
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>{template.questions} Questions</span>
-                    <span>{template.duration}</span>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <span className="px-3 py-1 rounded-full text-xs bg-primary/10 text-primary">
-                      {template.level}
-                    </span>
-                    <span className="px-3 py-1 rounded-full text-xs bg-muted">
-                      {template.category}
-                    </span>
-                  </div>
-
-                  <Button className="w-full">Use Template</Button>
-                </div>
-              </Card>
-            ))}
+            <Button
+              variant="outline"
+              size="lg"
+              className="flex-1"
+              onClick={() =>
+                router.push(
+                  `/create-quiz?template=${template.id}&preview=true`
+                )
+              }
+            >
+              Preview Quiz
+            </Button>
           </div>
         </div>
       </main>
@@ -231,4 +157,4 @@ const TemplatesPage = () => {
   );
 };
 
-export default TemplatesPage;
+export default TemplateDetailsPage;
