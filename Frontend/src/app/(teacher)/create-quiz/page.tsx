@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/components/navigation/Navbar";
+import TeacherNavbar from "@/components/navigation/TeacherNavbar";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -31,7 +31,7 @@ const Page = () => {
 
   return (
     <div className="min-h-screen bg-[hsl(210,20%,98%)]">
-      <Navbar />
+      <TeacherNavbar />
 
       <main className="container py-6 pt-24">
         {/* Back */}
