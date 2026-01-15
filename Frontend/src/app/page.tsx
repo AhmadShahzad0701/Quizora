@@ -9,7 +9,6 @@ import {
   Users,
   Clock,
   Award,
-  Zap,
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";

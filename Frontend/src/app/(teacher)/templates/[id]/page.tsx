@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import Navbar from "@/components/navigation/Navbar";
+import TeacherNavbar from "@/components/navigation/TeacherNavbar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Brain, Clock, Layers, ArrowLeft } from "lucide-react";
@@ -53,7 +53,7 @@ export default function TemplateDetailsPage() {
   if (!template) {
     return (
       <div className="min-h-screen bg-background">
-        <Navbar />
+        <TeacherNavbar />
         <main className="pt-24 text-center">
           <p className="text-muted-foreground text-lg">
             Template not found
@@ -75,7 +75,7 @@ export default function TemplateDetailsPage() {
   ------------------------------------------------------------------- */
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      <TeacherNavbar />
 
       <main className="pt-24 px-4 pb-16">
         <div className="max-w-5xl mx-auto space-y-8">
