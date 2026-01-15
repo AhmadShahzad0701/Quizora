@@ -10,7 +10,9 @@ import {
   Award,
   Brain,
 } from "lucide-react";
-import Navbar from "../../../components/navigation/Navbar";
+// import Navbar from "../../../components/navigation/Navbar";
+import TeacherNavbar from "@/components/navigation/TeacherNavbar";
+
 import Link from "next/link";
 
 const TeacherDashboard = () => {
@@ -23,24 +25,24 @@ const TeacherDashboard = () => {
       color: "text-primary",
     },
     {
-      label: "Active Students",
-      value: "156",
-      change: "+12 this month",
+      label: "Live Sessions",
+      value: "8",
+      change: "This week",
       icon: Users,
       color: "text-secondary",
     },
     {
-      label: "Avg. Score",
-      value: "78%",
-      change: "+5% from last week",
-      icon: TrendingUp,
+      label: "AI Generated Quizzes",
+      value: "18",
+      change: "75% AI usage",
+      icon: Brain,
       color: "text-success",
     },
     {
-      label: "Time Saved",
-      value: "24 hrs",
-      change: "This month",
-      icon: Clock,
+      label: "Public Quizzes",
+      value: "10",
+      change: "Shared with students",
+      icon: TrendingUp,
       color: "text-accent",
     },
   ];
@@ -79,7 +81,7 @@ const TeacherDashboard = () => {
     },
     {
       title: "Templates",
-      description: "Reusable Ready Template Quiz",
+      description: "Reusable ready quiz templates",
       icon: Brain,
       link: "/templates",
       color: "bg-gradient-secondary",
@@ -95,19 +97,23 @@ const TeacherDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
+      {/* <Navbar /> */}
+     <TeacherNavbar />
 
       <main className="pt-20 pb-12 px-4">
-        <div className="max-w-7xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-10">
+
           {/* Header */}
-          <div className="flex items-center justify-between animate-fade-in">
+          <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Welcome back, Professor!</h1>
-              <p className="text-muted-foreground text-lg">
-                Here is what happening with your classes today
+              <h1 className="text-3xl font-semibold mb-1">
+                Welcome back, Professor!
+              </h1>
+              <p className="text-base text-muted-foreground">
+                Here is what’s happening with your classes today
               </p>
             </div>
-            <Link href="/create-quiz"> 
+            <Link href="/create-quiz">
               <Button size="lg" className="bg-gradient-primary hover:opacity-90">
                 <Plus className="w-5 h-5 mr-2" />
                 Create New Quiz
@@ -115,21 +121,27 @@ const TeacherDashboard = () => {
             </Link>
           </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in-up">
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {stats.map((stat, index) => (
               <Card
                 key={index}
-                className="p-6 hover:shadow-lg transition-shadow"
+                className="p-5 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
-                    <p className="text-3xl font-bold">{stat.value}</p>
-                    <p className="text-xs text-success">{stat.change}</p>
+                  <div className="space-y-1">
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                      {stat.label}
+                    </p>
+                    <p className="text-2xl font-semibold">
+                      {stat.value}
+                    </p>
+                    <p className="text-xs text-success">
+                      {stat.change}
+                    </p>
                   </div>
-                  <div className={`p-3 rounded-lg bg-muted ${stat.color}`}>
-                    <stat.icon className="w-6 h-6" />
+                  <div className={`p-2.5 rounded-lg bg-muted ${stat.color}`}>
+                    <stat.icon className="w-5 h-5" />
                   </div>
                 </div>
               </Card>
@@ -138,19 +150,19 @@ const TeacherDashboard = () => {
 
           {/* Quick Actions */}
           <div>
-            <h2 className="text-2xl font-bold mb-4">Quick Actions</h2>
-            <div className="grid md:grid-cols-3 gap-6">
+            <h2 className="text-xl font-semibold mb-3">Quick Actions</h2>
+            <div className="grid md:grid-cols-3 gap-5">
               {quickActions.map((action, index) => (
-                <Link key={index} href={action.link}> {/* Correct usage of Link with href */}
-                  <Card className="p-6 hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer group">
-                    <div className="space-y-4">
+                <Link key={index} href={action.link}>
+                  <Card className="p-5 hover:shadow-lg transition-all hover:-translate-y-1 cursor-pointer">
+                    <div className="space-y-3">
                       <div
-                        className={`w-14 h-14 rounded-xl ${action.color} flex items-center justify-center group-hover:scale-110 transition-transform`}
+                        className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center`}
                       >
-                        <action.icon className="w-7 h-7 text-white" />
+                        <action.icon className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-lg mb-1">
+                        <h3 className="text-base font-medium">
                           {action.title}
                         </h3>
                         <p className="text-sm text-muted-foreground">
@@ -166,23 +178,25 @@ const TeacherDashboard = () => {
 
           {/* Recent Quizzes */}
           <div>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold">Recent Quizzes</h2>
-              <Link href="/quizzes"> {/* Correct usage of Link with href */}
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-xl font-semibold">Recent Quizzes</h2>
+              <Link href="/quizzes">
                 <Button variant="ghost">View All</Button>
               </Link>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {recentQuizzes.map((quiz, index) => (
-                <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                <Card key={index} className="p-5 hover:shadow-md">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="p-3 bg-muted rounded-lg">
-                        <BookOpen className="w-6 h-6 text-primary" />
+                        <BookOpen className="w-5 h-5 text-primary" />
                       </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg mb-1">{quiz.title}</h3>
+                      <div>
+                        <h3 className="text-base font-medium">
+                          {quiz.title}
+                        </h3>
                         <p className="text-sm text-muted-foreground">
                           {quiz.subject}
                         </p>
@@ -191,29 +205,29 @@ const TeacherDashboard = () => {
 
                     <div className="flex items-center gap-8">
                       <div className="text-center">
-                        <p className="text-sm text-muted-foreground">Students</p>
-                        <p className="text-xl font-semibold">{quiz.students}</p>
+                        <p className="text-xs text-muted-foreground">Students</p>
+                        <p className="text-lg font-semibold">
+                          {quiz.students}
+                        </p>
                       </div>
                       <div className="text-center">
-                        <p className="text-sm text-muted-foreground">Avg Score</p>
-                        <p className="text-xl font-semibold text-success">
+                        <p className="text-xs text-muted-foreground">Score</p>
+                        <p className="text-lg font-semibold text-success">
                           {quiz.avgScore}%
                         </p>
                       </div>
-                      <div>
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            quiz.status === "completed"
-                              ? "bg-success/10 text-success"
-                              : quiz.status === "active"
-                              ? "bg-primary/10 text-primary"
-                              : "bg-accent/10 text-accent"
-                          }`}
-                        >
-                          {quiz.status.charAt(0).toUpperCase() +
-                            quiz.status.slice(1)}
-                        </span>
-                      </div>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          quiz.status === "completed"
+                            ? "bg-success/10 text-success"
+                            : quiz.status === "active"
+                            ? "bg-primary/10 text-primary"
+                            : "bg-accent/10 text-accent"
+                        }`}
+                      >
+                        {quiz.status.charAt(0).toUpperCase() +
+                          quiz.status.slice(1)}
+                      </span>
                     </div>
                   </div>
                 </Card>
@@ -221,20 +235,21 @@ const TeacherDashboard = () => {
             </div>
           </div>
 
-          {/* Achievement Banner */}
-          <Card className="p-8 bg-gradient-hero relative overflow-hidden">
+          {/* Achievement */}
+          <Card className="p-7 bg-gradient-hero relative overflow-hidden">
             <div className="relative z-10 flex items-center justify-between">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold text-white">
-                  You are on fire! 🔥
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-1">
+                  You’re doing great! 🚀
                 </h3>
-                <p className="text-white/90">
-                  You have saved 24 hours this month using AI-powered grading
+                <p className="text-sm text-white/90">
+                  You saved 24 hours this month using AI-powered grading
                 </p>
               </div>
-              <Award className="w-24 h-24 text-white/20 absolute right-8" />
+              <Award className="w-20 h-20 text-white/20 absolute right-6" />
             </div>
           </Card>
+
         </div>
       </main>
     </div>
