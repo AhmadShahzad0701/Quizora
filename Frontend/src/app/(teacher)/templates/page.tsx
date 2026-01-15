@@ -4,9 +4,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { Input } from "@/components/ui/input";
 import { Brain, BookOpen, Timer, Layers, Search } from "lucide-react";
 import Navbar from "@/components/navigation/Navbar";
+=======
+import { Brain, BookOpen, Timer, Layers } from "lucide-react";
+import TeacherNavbar from "@/components/navigation/TeacherNavbar";
+>>>>>>> Stashed changes
 =======
 import { Brain, BookOpen, Timer, Layers } from "lucide-react";
 import TeacherNavbar from "@/components/navigation/TeacherNavbar";
