@@ -1,6 +1,6 @@
 export { QuizDetailsStep1 } from "./QuizDetailsStep1";
 export { QuizContentStep2 } from "./QuizContentStep2";
-export { QuestionsSelectionStep3 } from "./QuestionsSelectionStep3";
+export { QuizContentStep3 } from "./QuizContentStep3";
 export { GeneratingQuizStep } from "./GeneratingQuizStep";
 export { AddQuestionsStep } from "./AddQuestionsStep";
 export { MarkingStyleStep } from "./MarkingStyleStep";
