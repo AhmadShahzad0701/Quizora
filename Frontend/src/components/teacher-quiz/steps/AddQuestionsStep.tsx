@@ -59,7 +59,7 @@ export function AddQuestionsStep({
             questionType={question.type}
             points={question.points}
             questionText={question.text}
-            onEdit={() => onEditQuestion(question.id)} // Passing the ID instead of the whole question
+            onEdit={() => onEditQuestion(question.id)}
             onDelete={() => onDeleteQuestion(question.id)}
           />
         ))}

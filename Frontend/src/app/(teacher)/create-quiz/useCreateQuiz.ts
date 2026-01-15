@@ -216,7 +216,7 @@ export const useCreateQuiz = () => {
       showDownload = true;
     }
     if (currentMainStep === 2 && step2SubStep === 1) {
-      label = "Download Quiz";
+      label = "Next";
       showDownload = true;
     }
 

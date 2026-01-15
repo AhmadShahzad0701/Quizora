@@ -59,7 +59,7 @@ const SessionManage = () => {
 
           {/* End Quiz Button */}
           <div className="flex justify-center mt-12">
-            <Link href="/dashboard">
+            <Link href="/quiz-result">
             <Button 
               variant="destructive" 
               className="w-full max-w-md"
