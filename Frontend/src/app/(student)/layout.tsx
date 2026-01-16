@@ -1,13 +1,11 @@
-import './index.css';
-
-export default function RootLayout({
+export default function StudentLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-        {children}
-    </html>
+    <div className="min-h-screen">
+      {children}
+    </div>
   );
 }

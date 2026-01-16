@@ -12,6 +12,7 @@ interface QuizCardProps {
   question: Question;
   currentIndex: number;
   totalQuestions: number;
+  onNext: () => void; 
   answer: string;
   isFlagged: boolean;
   onAnswerChange: (answer: string) => void;
@@ -29,6 +30,7 @@ export const QuizCard = ({
   isFlagged,
   onAnswerChange,
   onFlag,
+  onNext,
   onReport,
   onSubmit,
   showSubmitOnly = false,
@@ -105,20 +107,10 @@ export const QuizCard = ({
 
       <div className="flex justify-center">
         {showSubmitOnly ? (
-          <Button
-            onClick={onSubmit}
-            className="bg-gradient-primary text-[#fff] px-32 py-3 rounded-md font-semibold text-base hover:opacity-90 transition-opacity"
-          >
-            Submit
-          </Button>
-        ) : (
-          <Button
-            onClick={onSubmit}
-            className="bg-gradient-primary text-[#fff] px-32 py-3 rounded-md font-semibold text-base hover:opacity-90 transition-opacity"
-          >
-            Submit
-          </Button>
-        )}
+  <Button onClick={onSubmit}>Submit Quiz</Button>
+) : (
+  <Button onClick={onNext}>Next</Button>
+)}
       </div>
     </div>
   );

@@ -44,10 +44,7 @@ const RoomCode = () => {
           {/* Back Button (Improved) */}
           <button
             onClick={() => router.back()}
-            className="mb-6 inline-flex items-center gap-2 rounded-md px-2 py-1
-                       text-sm font-medium text-muted-foreground
-                       hover:bg-muted hover:text-primary transition
-                       focus:outline-none focus:ring-2 focus:ring-primary"
+            className="mb-6 inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-primary transition focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Back to Dashboard</span>
@@ -88,17 +85,14 @@ const RoomCode = () => {
                   setRoomCode(e.target.value.replace(/\D/g, ""))
                 }
                 placeholder="e.g. 123456"
-                className="w-full text-lg tracking-widest px-4 py-3 rounded-md border
-                           focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full text-lg tracking-widest px-4 py-3 rounded-md border focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 rounded-md bg-primary text-white font-medium
-                         hover:opacity-90 transition
-                         focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full py-3 rounded-md bg-primary text-white font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-primary"
             >
               Join Quiz
             </button>

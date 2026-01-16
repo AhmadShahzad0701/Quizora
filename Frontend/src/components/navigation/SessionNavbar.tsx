@@ -14,7 +14,7 @@ interface NavbarProps {
   variant?: "session"; // Set default to session variant
 }
 
-const Navbar = ({ variant = "session" }: NavbarProps) => {
+const Navbar = ({}: NavbarProps) => {
   const pathname = usePathname(); // Get the current pathname
 
   // Define the session links only

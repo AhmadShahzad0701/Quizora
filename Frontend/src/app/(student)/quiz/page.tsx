@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { QuizCard } from "../../../components/quiz/QuizCard";
 import { RubricsButton } from "../../../components/quiz/RubricsButton";
@@ -80,10 +80,20 @@ const Quiz = () => {
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(new Set());
   const [isRubricsModalOpen, setIsRubricsModalOpen] = useState(false); // State to manage the modal visibility
   const { toast } = useToast();
-
+  const router = useRouter();
+  const isLastQuestion = currentQuestionIndex === sampleQuestions.length - 1;
   const currentQuestion = sampleQuestions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestion.id] || "";
 
+  const handleNext = () => {
+  if (currentQuestionIndex < sampleQuestions.length - 1) {
+    setCurrentQuestionIndex((prev) => prev + 1);
+    toast({
+      title: "Next Question",
+      description: `Moving to question ${currentQuestionIndex + 2}`,
+    });
+  }
+};
   const handleAnswerChange = (answer: string) => {
     setAnswers((prev) => ({
       ...prev,
@@ -119,19 +129,15 @@ const Quiz = () => {
   };
 
   const handleSubmit = () => {
-    if (currentQuestionIndex < sampleQuestions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-      toast({
-        title: "Answer submitted",
-        description: `Moving to question ${currentQuestionIndex + 2}`,
-      });
-    } else {
-      toast({
-        title: "Quiz completed!",
-        description: "All answers have been submitted.",
-      });
-    }
-  };
+  toast({
+    title: "Quiz completed!",
+    description: "All answers have been submitted.",
+  });
+
+  // ✅ Redirect to end-room page
+  router.push("/end-room");
+};
+
 
   const handleReadRubrics = () => {
     setIsRubricsModalOpen(true); // Open the rubrics modal
@@ -166,8 +172,10 @@ const Quiz = () => {
           isFlagged={flaggedQuestions.has(currentQuestion.id)}
           onAnswerChange={handleAnswerChange}
           onFlag={handleFlag}
+          onNext={handleNext}
           onReport={handleReport}
           onSubmit={handleSubmit}
+          showSubmitOnly={isLastQuestion}
         />
 
         <RubricsButton onClick={handleReadRubrics} />

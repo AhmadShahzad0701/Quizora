@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../../../components/ui/button";
 import StudentNavbar from "../../../components/navigation/StudentNavbar";
@@ -115,7 +115,16 @@ const WaitingRoom = ({
             </div>
 
             {/* Leave Room Button */}
+            
             <div className="flex justify-center mt-4">
+              <Link href="/quiz">
+              <Button
+                onClick={onLeaveRoom}
+                className="bg-blue-500 hover:bg-blue-600 duration-200 text-white px-16 py-6 text-lg rounded-lg mr-6"
+              >
+                Start Quiz
+              </Button>
+              </Link>
               <Button
                 onClick={onLeaveRoom}
                 className="bg-red-500 hover:bg-red-600 duration-200 text-white px-16 py-6 text-lg rounded-lg"
