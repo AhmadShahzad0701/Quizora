@@ -7,17 +7,15 @@ import {
     LayoutDashboard,
     BookOpen,
     Brain,
-    BarChart3,
     LogOut,
     GraduationCap,
 } from "lucide-react";
 
 const teacherLinks = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-  { name: "Sessions", path: "/teacher/session", icon: BookOpen },
-  { name: "My Quizzes", path: "/teacher/quiz-session", icon: Brain },
-  { name: "Templates", path: "/teacher/templates", icon: BookOpen },
-  { name: "Analytics", path: "/teacher/analytics", icon: BarChart3 },
+  { name: "Create Quiz", path: "/create-quiz", icon: BookOpen },
+  { name: "My Quizzes", path: "/my-quizzes", icon: Brain },
+  { name: "Templates", path: "/templates", icon: BookOpen },
 ];
 
 const TeacherNavbar = () => {
