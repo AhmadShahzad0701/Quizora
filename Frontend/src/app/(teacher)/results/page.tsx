@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Filter, ClipboardList, ArrowLeft } from "lucide-react";
+import { Search, Filter, ClipboardList } from "lucide-react";
 import TeacherNavbar from "@/components/navigation/TeacherNavbar";
 import QuizResultCard from "@/components/results/QuizResultCard";
 import { getQuizSummaries } from "@/data/mockQuizResults";

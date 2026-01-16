@@ -188,6 +188,7 @@ const TeacherDashboard = () => {
             {/* Quiz List */}
             <div className="space-y-4">
               {recentQuizzes.map((quiz, index) => (
+                <Link key={index} href="/results/1" className="block">
                 <Card
                   key={index}
                   className="p-5 border transition-all duration-200 hover:shadow-md"
@@ -245,6 +246,7 @@ const TeacherDashboard = () => {
                     </div>
                   </div>
                 </Card>
+                </Link>
               ))}
             </div>
           </div>
