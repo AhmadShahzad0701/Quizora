@@ -85,10 +85,10 @@ const TeacherDashboard = () => {
       color: "bg-gradient-secondary",
     },
     {
-      title: "Analytics",
-      description: "View detailed reports",
+      title: "Quiz Results",
+      description: "View Evaluated Results",
       icon: BarChart3,
-      link: "/analytics",
+      link: "/results",
       color: "bg-gradient-accent",
     },
   ];

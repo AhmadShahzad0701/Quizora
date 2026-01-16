@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   BookOpen,
   Brain,
-  BarChart3,
   GraduationCap,
   User,
   Settings,
@@ -17,10 +16,10 @@ import {
 
 const teacherLinks = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-  { name: "Sessions", path: "/sessions", icon: BookOpen },
-  { name: "My Quizzes", path: "/quizzes", icon: Brain },
+  { name: "Create Quiz", path: "/create-quiz", icon: BookOpen },
+  { name: "My Quizzes", path: "/my-quizzes", icon: Brain },
   { name: "Templates", path: "/templates", icon: BookOpen },
-  { name: "Analytics", path: "/analytics", icon: BarChart3 },
+
 ];
 
 interface TeacherNavbarProps {
@@ -66,11 +65,11 @@ const TeacherNavbar = ({
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-primary-foreground" />
+          <Link href="/dashboard" className="flex items-center space-x-2 group">
+            <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform">
+              <GraduationCap className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-gradient-primary">
+            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               Quizora
             </span>
           </Link>

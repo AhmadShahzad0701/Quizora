@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import StudentNavbar from "@/components/navigation/StudentNavbar";
+import Navbar from "@/components/navigation/Navbar";
 
 const RoomCode = () => {
   const router = useRouter();
@@ -36,7 +36,7 @@ const RoomCode = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-green-100">
-      <StudentNavbar />
+      <Navbar />
 
       <main className="flex flex-1 items-center justify-center px-4 pt-24 pb-10">
         <div className="w-full max-w-md bg-white rounded-xl shadow-xl p-8">

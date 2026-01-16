@@ -96,7 +96,7 @@ export default function TemplatesPage() {
 
           {/* Back to Dashboard */}
           <button
-            onClick={() => router.push("/teacher")}
+            onClick={() => router.push("/dashboard")}
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="w-4 h-4" />
