@@ -24,20 +24,42 @@ export function NavigationButtons({
   additionalButtons,
 }: NavigationButtonsProps) {
   return (
-    <div className="flex items-center justify-between mt-8 pt-6 border-t border-[hsl(214,32%,91%)]"> {/* Replaced border color */}
+    <div className="flex items-center justify-between mt-8 pt-6 border-t border-border">
+
+      {/* Previous Button */}
       <div>
         {showPrevious && (
-          <Button variant="ghost" onClick={onPrevious} className="gap-2">
+          <Button
+            variant="outline"
+            onClick={onPrevious}
+            className="
+              flex items-center gap-2
+              text-muted-foreground
+              border-muted-foreground/40
+              bg-transparent
+              hover:bg-muted/60
+              hover:text-foreground
+              hover:border-muted-foreground
+              focus-visible:ring-0
+              transition-all duration-200
+            "
+          >
             <ArrowLeft className="h-4 w-4" />
-            <span className="text-white">{previousLabel}</span> {/* Replaced text color */}
+            {previousLabel}
           </Button>
         )}
       </div>
+
+      {/* Next Button */}
       <div className="flex items-center gap-3">
         {additionalButtons}
         {showNext && (
-          <Button onClick={onNext} disabled={nextDisabled} className="gap-2">
-            <span className="text-white">{nextLabel}</span> {/* Replaced text color */}
+          <Button
+            onClick={onNext}
+            disabled={nextDisabled}
+            className="flex items-center gap-2"
+          >
+            {nextLabel}
             <ArrowRight className="h-4 w-4" />
           </Button>
         )}

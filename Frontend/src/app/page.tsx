@@ -115,7 +115,7 @@ const Home = () => {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
-            <Link  href="/#features">
+            <Link href="/#features">
               <Button size="lg" variant="outline" className="text-lg px-8">
                 Explore Features
               </Button>
@@ -168,7 +168,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section id = "about" className="py-20 px-4">
+      <section id="about" className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
 
@@ -259,31 +259,70 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 px-4 bg-gradient-hero relative overflow-hidden text-center text-white">
-        <div className="absolute inset-0 bg-grid-white/10"></div>
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Ready to Transform Your Teaching?
+      {/* PREMIUM CTA */}
+      <section className="relative py-28 px-4 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-sky-500 to-emerald-400" />
+
+        {/* Glow Effects */}
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-yellow-300/20 rounded-full blur-3xl" />
+
+        <div className="relative z-10 max-w-5xl mx-auto text-center text-white space-y-8">
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight">
+            Transform Assessments.
+            <span className="block text-white/90 mt-2">
+              Elevate Teaching with Quizora.
+            </span>
           </h2>
-          <p className="text-xl text-white/90">
-            Join thousands of educators using Quizora to create smarter
-            assessments.
+
+          <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto">
+            Create smarter quizzes, save hours of grading time, and gain deep insights
+            into student performance — all powered by AI.
           </p>
-          <div className="flex justify-center gap-4 pt-4">
-            <Link href="/signup">
-              <Button className="bg-white text-primary text-lg px-8">
-                Start Free Trial
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center gap-6 pt-6">
+
+            {/* PRIMARY BUTTON */}
+            <Link href="/plans">
+              <Button
+                size="lg"
+                className="relative px-10 py-6 text-lg font-semibold bg-white text-primary shadow-2xl hover:bg-white hover:scale-105 active:bg-white focus:bg-white focus-visible:ring-0 transition-all duration-300"
+              >
+                View Pricing Plans
               </Button>
+
             </Link>
-            <a href="#contact">
-              <Button className="bg-primary text-white text-lg px-8">
-                Contact Sales
-              </Button>
-            </a>
+
+            {/* SECONDARY BUTTON */}
+            <Button
+              asChild
+              size="lg"
+              className="
+    px-10 py-6 text-lg font-semibold
+    bg-white/15
+    text-white
+    backdrop-blur-md
+    border border-white/30
+    hover:bg-white/25
+    hover:border-white/60
+    focus-visible:ring-0
+    transition-all duration-300
+  "
+            >
+              <Link href="/signup">Start Free Trial</Link>
+            </Button>
+
           </div>
+
+          {/* Trust Signal */}
+          <p className="text-sm text-white/80 pt-4">
+            No credit card required • Cancel anytime • Trusted by educators
+          </p>
         </div>
       </section>
+
 
       {/* FOOTER */}
       <Footer />
