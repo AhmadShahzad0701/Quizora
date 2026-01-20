@@ -1,17 +1,22 @@
 import os
 import json
 import requests
-from typing import Dict, Optional
 
 
 class LLMJudge:
-    OPENROUTER_API_URL = "https://api.groq.com/openai/v1/chat/completions"
+    OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
     def __init__(self):
-        self.model = "llama3-8b-8192"  # ✅ valid Groq model
+        # ✅ Stable OpenRouter model
+        self.model = "openai/gpt-4o-mini"
 
     def _build_prompt(self, question, student_answer, rubric, max_score):
-        rubric_lines = "\n".join([f"- {k}: {v} marks" for k, v in rubric.items()])
+        rubric_lines = (
+            "General accuracy and completeness"
+            if not rubric
+            else "\n".join([f"- {k}: {v} marks" for k, v in rubric.items()])
+        )
+
         return f"""
 You are an exam evaluator.
 
@@ -26,7 +31,9 @@ Rubric:
 
 Total Marks: {max_score}
 
-Return STRICT JSON ONLY:
+Return ONLY valid JSON.
+
+JSON FORMAT:
 {{
   "score": 0.0,
   "justification": "short explanation",
@@ -35,25 +42,28 @@ Return STRICT JSON ONLY:
 """
 
     def evaluate(self, question, student_answer, rubric, max_score):
-        api_key = os.getenv("GROQ_API_KEY")
-        print("RUNTIME KEY CHECK:", api_key)
+        api_key = os.getenv("OPENROUTER_API_KEY")
 
         if not api_key:
-            raise RuntimeError("GROQ_API_KEY not found")
+            raise RuntimeError("OPENROUTER_API_KEY not found in environment")
 
         payload = {
             "model": self.model,
             "messages": [
-                {"role": "system", "content": "You are a strict grading assistant."},
-                {"role": "user", "content": self._build_prompt(question, student_answer, rubric, max_score)}
+                {"role": "user", "content": self._build_prompt(
+                    question, student_answer, rubric, max_score
+                )}
             ],
-            "temperature": 0.0,
-            "max_tokens": 512   # ✅ REQUIRED
+            "temperature": 0,
+            "max_tokens": 300
         }
 
         headers = {
             "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            # Optional but recommended by OpenRouter
+            "HTTP-Referer": "http://localhost",
+            "X-Title": "Evaluation Service"
         }
 
         response = requests.post(
@@ -63,14 +73,20 @@ Return STRICT JSON ONLY:
             timeout=60
         )
 
-        response.raise_for_status()
+        if response.status_code != 200:
+            raise RuntimeError(
+                f"OpenRouter API Error {response.status_code}: {response.text}"
+            )
 
         content = response.json()["choices"][0]["message"]["content"]
 
-        parsed = json.loads(content)
+        try:
+            parsed = json.loads(content)
+        except json.JSONDecodeError:
+            raise RuntimeError(f"Invalid JSON from model: {content}")
 
         return {
-            "score": max(0.0, min(float(parsed.get("score", 0.5)), 1.0)),
+            "score": float(parsed.get("score", 0)),
             "justification": parsed.get("justification", ""),
             "weight_adjustment": parsed.get("weight_adjustment", {})
         }
