@@ -24,6 +24,9 @@ def evaluate(request: EvaluationRequest):
     llm_judge = LLMJudge()
     results = []
 
+    total_marks = 0
+    total_obtained = 0
+
     try:
         for item in request.evaluations:
 

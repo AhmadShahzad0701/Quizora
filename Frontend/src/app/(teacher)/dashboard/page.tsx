@@ -85,10 +85,10 @@ const TeacherDashboard = () => {
       color: "bg-gradient-secondary",
     },
     {
-      title: "Quiz Results",
-      description: "View Evaluated Results",
+      title: "AI Evaluation",
+      description: "Evaluate student answers with AI",
       icon: BarChart3,
-      link: "/results",
+      link: "/evaluation",
       color: "bg-gradient-accent",
     },
   ];
