@@ -23,18 +23,16 @@ aggregator = Aggregator()
 def evaluate(request: EvaluationRequest):
     llm_judge = LLMJudge()
     results = []
-
-    total_marks = 0
-    total_obtained = 0
+    overall_max_marks = 0
+    overall_obtained_marks = 0.0
 
     try:
         for item in request.evaluations:
 
-            # Phase 1: ignore unsupported question types
             if item.question_type != "descriptive":
                 continue
 
-            # Step 1: Descriptive base evaluation
+            # Step 1
             base_eval = descriptive_engine.evaluate(
                 question=item.question,
                 answer=item.student_answer or "",
@@ -42,20 +40,20 @@ def evaluate(request: EvaluationRequest):
                 max_score=item.max_score
             )
 
-            # Step 2: Similarity engine
+            # Step 2
             similarity_score = similarity_engine.evaluate(
                 student_answer=item.student_answer or "",
                 reference_answer=None
             )
 
-            # Step 3: NLI engine
+            # Step 3
             nli_score = nli_engine.evaluate(
                 question=item.question,
                 student_answer=item.student_answer or "",
                 reference_answer=None
             )
 
-            # Step 4: LLM Judge (MOST COMMON FAILURE POINT)
+            # Step 4
             llm_eval = llm_judge.evaluate(
                 question=item.question,
                 student_answer=item.student_answer or "",
@@ -63,7 +61,7 @@ def evaluate(request: EvaluationRequest):
                 max_score=item.max_score
             )
 
-            # Step 5: Aggregate all signals
+            # Step 5
             aggregated = aggregator.aggregate(
                 scores={
                     "llm": llm_eval["score"],
@@ -75,25 +73,36 @@ def evaluate(request: EvaluationRequest):
                 llm_adjustment=llm_eval.get("weight_adjustment")
             )
 
-            # Step 6: Build response object
+            # ✅ STEP 6 — MUST BE INSIDE LOOP
+            obtained = round(aggregated["final_marks"], 2)
+
+            overall_max_marks += item.max_score
+            overall_obtained_marks += obtained
+
             results.append(
                 EvaluationResult(
                     student_id=item.student_id,
                     question_id=item.question_id,
-                    total_score=aggregated["final_marks"],
+                    max_marks=item.max_score,
+                    obtained_marks=obtained,
                     breakdown=base_eval["breakdown"],
                     feedback=llm_eval["justification"],
-                    confidence=aggregated["final_percentage"]
+                    signals={
+                        "llm": round(llm_eval["score"], 3),
+                        "nli": round(nli_score, 3),
+                        "similarity": round(similarity_score, 3)
+                    },
+                    confidence=round(aggregated["final_percentage"], 3)
                 )
             )
 
-        return EvaluationResponse(results=results)
+        # ✅ RETURN AFTER LOOP
+        return EvaluationResponse(
+            results=results,
+            overall_max_marks=overall_max_marks,
+            overall_obtained_marks=round(overall_obtained_marks, 2)
+        )
 
     except Exception as e:
-        # 🔥 THIS IS CRITICAL — makes the real error visible
         print("ENGINE ERROR:", str(e))
-
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=500, detail=str(e))

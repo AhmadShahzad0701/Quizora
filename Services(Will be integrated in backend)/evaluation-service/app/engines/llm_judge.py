@@ -85,8 +85,10 @@ JSON FORMAT:
         except json.JSONDecodeError:
             raise RuntimeError(f"Invalid JSON from model: {content}")
 
+        raw_score = float(parsed.get("score", max_score / 2))
+        normalized_score = max(0.0, min(raw_score / max_score, 1.0))
         return {
-            "score": float(parsed.get("score", 0)),
+            "score": normalized_score,
             "justification": parsed.get("justification", ""),
             "weight_adjustment": parsed.get("weight_adjustment", {})
         }

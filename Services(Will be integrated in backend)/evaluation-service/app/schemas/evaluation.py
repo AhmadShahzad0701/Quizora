@@ -12,11 +12,20 @@ class EvaluationItem(BaseModel):
 class EvaluationRequest(BaseModel):
     evaluations: List[EvaluationItem]
 class EvaluationResult(BaseModel):
-    student_id: Optional[str] = None
-    question_id: Optional[str] = None
-    total_score: int
+    student_id: str
+    question_id: str
+
+    max_marks: int                 # out of how many
+    obtained_marks: float          # obtained marks
+
     breakdown: Dict[str, int]
     feedback: str
-    confidence: Optional[float] = None
+
+    signals: Dict[str, float]      # model-wise scores
+    confidence: float
 class EvaluationResponse(BaseModel):
     results: List[EvaluationResult]
+
+    overall_max_marks: int
+    overall_obtained_marks: float
+
