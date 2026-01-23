@@ -2,7 +2,7 @@
 
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { QuizTable, QuizTableRow } from "@/components/quiz-session/QuizTable";
+import { QuizTable, QuizTableRow } from "@/components/quiz-session/StudentTable";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Navbar from "@/components/navigation/SessionNavbar";
 import Link from "next/link"; // Import Link from next/link

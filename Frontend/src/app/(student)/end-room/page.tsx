@@ -8,20 +8,11 @@ const RoomCode = () => {
   const router = useRouter();
   const [roomCode, setRoomCode] = useState("");
   const [error, setError] = useState("");
-
-  const enterFullScreen = () => {
-    const docElement = document.documentElement as HTMLElement;
-    if (docElement.requestFullscreen) {
-      docElement.requestFullscreen();
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (roomCode === "123456") { 
-      enterFullScreen(); 
-      router.push("/join-quiz");
+      router.push("/result");
     } else {
       setError("Invalid room code. Please try again.");
     }

@@ -3,7 +3,7 @@
 import { Button } from "../ui/button";
 import { Menu, X, GraduationCap } from "lucide-react";
 import { useState } from "react";
-import { usePathname } from "next/navigation"; 
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -12,10 +12,11 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Features", path: "/features" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
+    { name: "Features", path: "/#features" },
+    { name: "About", path: "/#about" },
+    { name: "Contact", path: "/#contact" },
   ];
+
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-b border-border z-40">
@@ -37,11 +38,10 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === link.path
-                    ? "text-primary"
-                    : "text-foreground/70"
-                }`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.path
+                  ? "text-primary"
+                  : "text-foreground/70"
+                  }`}
               >
                 {link.name}
               </Link>
@@ -79,11 +79,10 @@ const Navbar = () => {
                 key={link.path}
                 href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${
-                  pathname === link.path
-                    ? "bg-primary/10 text-primary"
-                    : "text-foreground/70 hover:bg-muted hover:text-foreground"
-                }`}
+                className={`block px-3 py-2 rounded-lg text-base font-medium transition-colors ${pathname === link.path
+                  ? "bg-primary/10 text-primary"
+                  : "text-foreground/70 hover:bg-muted hover:text-foreground"
+                  }`}
               >
                 {link.name}
               </Link>

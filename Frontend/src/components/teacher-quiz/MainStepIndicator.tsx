@@ -23,9 +23,9 @@ export function MainStepIndicator({ steps, currentStep, completedSteps }: MainSt
         return (
           <div key={step.id} className="flex flex-col items-center text-center flex-1">
             <div
-              className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
                 isCompleted
-                  ? "bg-[hsl(217,91%,60%)] text-[hsl(0,0%,100%)] shadow-md scale-110" // Blue for completed steps
+                  ? "bg-[hsl(217,91%,60%)] text-[hsl(0,0%,100%)] shadow-sm" // Blue for completed steps
                   : isCurrent
                   ? "bg-[hsl(217,91%,60%)] text-[hsl(0,0%,100%)]" // Blue for current step
                   : "bg-[hsl(210,40%,96%)] text-[hsl(215,16%,47%)] border-2 border-[hsl(214,32%,91%)]" // Grey for upcoming/incomplete steps
@@ -37,7 +37,7 @@ export function MainStepIndicator({ steps, currentStep, completedSteps }: MainSt
                 <span>{step.id}</span>
               )}
             </div>
-            <div className="mt-2">
+            <div className="mt-1">
               <p
                 className={`text-sm font-medium ${
                   isCurrent

@@ -1,13 +1,15 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { QuizCard } from "../../../components/quiz/QuizCard";
 import { RubricsButton } from "../../../components/quiz/RubricsButton";
 import { Question } from "../../../types/quiz";
 import { useToast } from "../../../hooks/use-toast";
 import StudentNavbar from "@/components/navigation/StudentNavbar";
+import RubricsModal from "@/components/quiz/RubricsModal"; // Import RubricsModal
 
 const sampleQuestions: Question[] = [
+  // Sample questions structure here
   {
     id: "1",
     type: "mcq",
@@ -75,14 +77,23 @@ hours: 0, minutes: 0, seconds: 0 });
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(
-    new Set()
-  );
+  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<string>>(new Set());
+  const [isRubricsModalOpen, setIsRubricsModalOpen] = useState(false); // State to manage the modal visibility
   const { toast } = useToast();
-
+  const router = useRouter();
+  const isLastQuestion = currentQuestionIndex === sampleQuestions.length - 1;
   const currentQuestion = sampleQuestions[currentQuestionIndex];
   const currentAnswer = answers[currentQuestion.id] || "";
 
+  const handleNext = () => {
+  if (currentQuestionIndex < sampleQuestions.length - 1) {
+    setCurrentQuestionIndex((prev) => prev + 1);
+    toast({
+      title: "Next Question",
+      description: `Moving to question ${currentQuestionIndex + 2}`,
+    });
+  }
+};
   const handleAnswerChange = (answer: string) => {
     setAnswers((prev) => ({
       ...prev,
@@ -118,30 +129,26 @@ const Quiz = () => {
   };
 
   const handleSubmit = () => {
-    if (currentQuestionIndex < sampleQuestions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-      toast({
-        title: "Answer submitted",
-        description: `Moving to question ${currentQuestionIndex + 2}`,
-      });
-    } else {
-      toast({
-        title: "Quiz completed!",
-        description: "All answers have been submitted.",
-      });
-    }
-  };
+  toast({
+    title: "Quiz completed!",
+    description: "All answers have been submitted.",
+  });
+
+  // ✅ Redirect to end-room page
+  router.push("/end-room");
+};
+
 
   const handleReadRubrics = () => {
-    toast({
-      title: "Opening Rubrics",
-      description: "Displaying rubrics for this question.",
-    });
+    setIsRubricsModalOpen(true); // Open the rubrics modal
+  };
+
+  const handleCloseRubrics = () => {
+    setIsRubricsModalOpen(false); // Close the rubrics modal
   };
 
   // Calculate progress percentage
-  const progressPercentage =
-    ((currentQuestionIndex + 1) / sampleQuestions.length) * 100;
+  const progressPercentage = ((currentQuestionIndex + 1) / sampleQuestions.length) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 to-green-200 flex flex-col">
@@ -165,12 +172,17 @@ const Quiz = () => {
           isFlagged={flaggedQuestions.has(currentQuestion.id)}
           onAnswerChange={handleAnswerChange}
           onFlag={handleFlag}
+          onNext={handleNext}
           onReport={handleReport}
           onSubmit={handleSubmit}
+          showSubmitOnly={isLastQuestion}
         />
 
         <RubricsButton onClick={handleReadRubrics} />
       </main>
+
+      {/* Render Rubrics Modal */}
+      <RubricsModal isOpen={isRubricsModalOpen} onClose={handleCloseRubrics} />
     </div>
   );
 };
