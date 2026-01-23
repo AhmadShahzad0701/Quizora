@@ -1,69 +1,89 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { QuestionItem } from "../QuestionItem";
+"use client";
 
-interface Question {
-  id: number;
-  type: string;
-  points: number;
-  text: string;
-}
+import React from "react";
+import { Pencil } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Question } from "@/app/(teacher)/create-quiz/useCreateQuiz";
 
 interface AddQuestionsStepProps {
   questions: Question[];
-  isPublic: boolean;
-  onTogglePublic: (value: boolean) => void;
   onEditQuestion: (id: number) => void;
-  onDeleteQuestion: (id: number) => void;
 }
 
-export function AddQuestionsStep({
+const AddQuestionsStep: React.FC<AddQuestionsStepProps> = ({
   questions,
-  isPublic,
-  onTogglePublic,
   onEditQuestion,
-  onDeleteQuestion,
-}: AddQuestionsStepProps) {
+}) => {
+  if (!questions || questions.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-[300px] text-muted-foreground">
+        No questions generated yet.
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-[hsl(215,16%,47%)]">Make Quiz Public</span>
-          {/* Replaced Switch with a native checkbox */}
-          <input
-            type="checkbox"
-            checked={isPublic}
-            onChange={(e) => onTogglePublic(e.target.checked)}
-            className="form-checkbox"
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
-            {/* Share or copy buttons */}
-          </Button>
-        </div>
-      </div>
+    <div className="space-y-6">
+      {questions.map((q, index) => (
+        <div
+          key={q.id}
+          className="border rounded-lg p-4 space-y-3 bg-background"
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <div className="flex gap-3 items-center">
+              <span className="text-sm font-medium text-muted-foreground">
+                Q{index + 1}
+              </span>
+              <span className="text-xs px-2 py-1 rounded bg-muted">
+                {q.type}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {q.points} marks
+              </span>
+            </div>
 
-      <div>
-        <h2 className="text-2xl font-bold text-[hsl(222,47%,11%)]">Add Questions</h2>
-        <p className="text-sm text-[hsl(215,16%,47%)] mt-1">
-          Create questions for your quiz ({questions.length} Added)
-        </p>
-      </div>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => onEditQuestion(q.id)}
+            >
+              <Pencil className="h-4 w-4" />
+            </Button>
+          </div>
 
-      <div className="space-y-3">
-        {questions.map((question, index) => (
-          <QuestionItem
-            key={question.id}
-            questionNumber={index + 1}
-            questionType={question.type}
-            points={question.points}
-            questionText={question.text}
-            onEdit={() => onEditQuestion(question.id)}
-            onDelete={() => onDeleteQuestion(question.id)}
-          />
-        ))}
-      </div>
+          {/* Question Text */}
+          <p className="text-sm font-medium">{q.text}</p>
+
+          {/* MCQ Options */}
+          {q.options && q.options.length > 0 && (
+            <ul className="space-y-1 pl-4">
+              {q.options.map((opt, i) => (
+                <li
+                  key={i}
+                  className={`text-sm ${
+                    q.answer === opt
+                      ? "font-semibold text-primary"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  • {opt}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* Answer (Short / Long / True-False) */}
+          {!q.options && q.answer && (
+            <div className="text-sm text-muted-foreground">
+              <span className="font-medium text-foreground">Answer: </span>
+              {q.answer}
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
-}
+};
+
+export default AddQuestionsStep;

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import TeacherNavbar from "@/components/navigation/TeacherNavbar";
@@ -12,23 +13,44 @@ import {
 import Link from "next/link";
 
 /* --------------------
-   Dummy Result (API se replace hoga)
+   TYPES
 -------------------- */
-const evaluationResult = {
-  student_id: "S5",
-  question_id: "Q1",
-  total_score: 10,
-  breakdown: {
-    "Conceptual Understanding": 0,
-    Clarity: 0,
-    Completeness: 0,
-  },
-  feedback:
-    "The student demonstrates a good understanding of the differences between TCP and UDP, highlighting key aspects such as connection-oriented vs. connectionless, reliability, and use cases. However, the explanation could be clearer and more structured, and it lacks some details that would enhance completeness.",
-  confidence: 1,
-};
+interface EvaluationResult {
+  student_id: string;
+  question_id: string;
+  score: number;
+  breakdown: Record<string, number>;
+  feedback: string;
+  confidence: number;
+}
 
 export default function EvaluationResultsPage() {
+  const [evaluationResult] = useState<EvaluationResult | null>(() => {
+  if (typeof window === "undefined") return null;
+
+  const stored = localStorage.getItem("evaluationResult");
+  if (!stored) return null;
+
+  const parsed = JSON.parse(stored);
+  return parsed?.results?.[0] ?? null;
+});
+
+
+  
+
+  if (!evaluationResult) {
+    return (
+      <div className="min-h-screen bg-background">
+        <TeacherNavbar />
+        <main className="pt-20 px-6 text-center">
+          <p className="text-muted-foreground">
+            No evaluation result found.
+          </p>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <TeacherNavbar />
@@ -57,14 +79,14 @@ export default function EvaluationResultsPage() {
                   Total Score
                 </p>
                 <p className="text-2xl font-semibold">
-                  {evaluationResult.total_score}
+                  {evaluationResult.score}
                 </p>
               </div>
             </Card>
 
             <Card className="p-6 flex items-center gap-4">
               <div className="p-3 rounded-lg bg-muted">
-                <BarChart3 className="w-6 h-6 text-accent" />
+                <BarChart3 className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">
@@ -82,7 +104,7 @@ export default function EvaluationResultsPage() {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">
-                  Evaluation Confidence
+                  Confidence
                 </p>
                 <p className="text-lg font-medium">
                   {evaluationResult.confidence === 1
@@ -99,39 +121,35 @@ export default function EvaluationResultsPage() {
               Marks Breakdown
             </h2>
 
-            <div className="space-y-4">
-              {Object.entries(evaluationResult.breakdown).map(
-                ([key, value]) => (
-                  <div
-                    key={key}
-                    className="flex items-center justify-between"
-                  >
-                    <p className="text-sm">{key}</p>
-                    <span className="text-sm font-semibold">
-                      {value}
-                    </span>
-                  </div>
-                )
-              )}
-            </div>
+            {Object.entries(evaluationResult.breakdown).map(
+              ([key, value]) => (
+                <div
+                  key={key}
+                  className="flex justify-between text-sm py-1"
+                >
+                  <span>{key}</span>
+                  <span className="font-semibold">{value}</span>
+                </div>
+              )
+            )}
           </Card>
 
           {/* FEEDBACK */}
           <Card className="p-6">
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <MessageSquareText className="w-5 h-5 text-primary" />
               <h2 className="text-xl font-semibold">
                 AI Examiner Feedback
               </h2>
             </div>
 
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground">
               {evaluationResult.feedback}
             </p>
           </Card>
 
           {/* ACTIONS */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between">
             <Link href="/evaluation">
               <Button variant="outline">
                 Evaluate Another Answer
@@ -139,7 +157,7 @@ export default function EvaluationResultsPage() {
             </Link>
 
             <Link href="/teacher">
-              <Button className="bg-gradient-primary hover:opacity-90">
+              <Button className="bg-gradient-primary">
                 Back to Dashboard
               </Button>
             </Link>

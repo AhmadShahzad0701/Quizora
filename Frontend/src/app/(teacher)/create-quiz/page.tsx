@@ -70,7 +70,7 @@ const Page = () => {
         {/* Card Content */}
         <div className="card-elevated p-8 mb-6">
           {q.isGenerating ? (
-            <GeneratingQuizStep />
+            <GeneratingQuizStep isGenerating={q.isGenerating} />
           ) : q.currentMainStep === 1 ? (
             q.step1SubStep === 1 ? (
               <QuizDetailsStep1
@@ -99,16 +99,20 @@ const Page = () => {
             )
           ) : q.currentMainStep === 2 ? (
             q.step2SubStep === 1 ? (
+              // <AddQuestionsStep
+              //   questions={q.questions}
+              //   isPublic={q.isPublic}
+              //   onTogglePublic={q.setIsPublic}
+              //   onEditQuestion={q.handleEditQuestion}
+              //   onDeleteQuestion={(id: number) =>
+              //     q.setQuestions(
+              //       q.questions.filter((x) => x.id !== id)
+              //     )
+              //   }
+              // />
               <AddQuestionsStep
                 questions={q.questions}
-                isPublic={q.isPublic}
-                onTogglePublic={q.setIsPublic}
                 onEditQuestion={q.handleEditQuestion}
-                onDeleteQuestion={(id: number) =>
-                  q.setQuestions(
-                    q.questions.filter((x) => x.id !== id)
-                  )
-                }
               />
             ) : q.step2SubStep === 2 ? (
               <MarkingStyleStep

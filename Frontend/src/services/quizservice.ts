@@ -1,69 +1,73 @@
-// src/services/quiz.service.ts
-// This Services Folder and file is for API calls From Backend and Frontend 
-// So the UI components will not filled with API calls directly and the Calls will be made from here 
-// and Clean Code Practices will be followed
+import axios from "axios";
 
-// src/services/quizService.ts
-// src/services/quizService.ts
+const API_BASE_URL = "http://localhost:4000/api";
+export interface GeneratedQuestion {
+  type: string;
+  question: string;
+  marks: number;
+  options?: string[];
+  correct_answer?: string;
+}
 
-// Type Definitions
-export interface QuizMetadata {
+export interface GeneratedQuiz {
   title: string;
   subject: string;
   difficulty: string;
-}
-
-export interface QuizConfig {
   total_questions: number;
-  question_types: {
-    mcq?: number;
-    true_false?: number;
-    short?: number;
-    long?: number;
-  };
+  total_marks: number;
+  questions: GeneratedQuestion[];
 }
 
 export interface GenerateQuizPayload {
-  metadata: QuizMetadata;
-  config: QuizConfig;
+  title: string;
+  subject: string;
+  difficulty: string;
+  timeLimit: number;
+  totalQuestions: number;
+  totalMarks: number;
+  quizType: string;
+  distribution: Record<string, number>;
+  contentText: string;
 }
-
-export interface QuizQuestion {
-  type: string;
-  question: string;
-  options?: string[];
-  answer?: string;
-}
-
-export interface GenerateQuizResponse {
-  quiz: {
-    title: string;
-    questions: QuizQuestion[];
-  };
-}
-
-// API Logic Starts Here
-const API_BASE_URL = "http://127.0.0.1:8000";
 
 export async function generateQuiz(
-  payload: GenerateQuizPayload
-): Promise<GenerateQuizResponse> {
+  payload: GenerateQuizPayload,
+): Promise<GeneratedQuiz> {
+  const requestBody = {
+    meta: {
+      title: payload.title,
+      subject: payload.subject,
+      difficulty: payload.difficulty,
+      time_limit: payload.timeLimit,
+      total_questions: payload.totalQuestions,
+      total_marks: payload.totalMarks,
+      quiz_type: payload.quizType,
+    },
+    distribution: payload.distribution,
+    content: {
+      text: payload.contentText,
+      files: [],
+    },
+  };
+
   try {
-    const response = await fetch(`${API_BASE_URL}/api/quiz/generate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await axios.post(
+      `${API_BASE_URL}/quiz/generate`,
+      requestBody,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-      body: JSON.stringify(payload),
-    });
+    );
 
-    if (!response.ok) {
-      throw new Error("Failed to generate quiz");
+    return response.data as GeneratedQuiz;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Generate Quiz API Error:", error.message);
+    } else {
+      console.error("Generate Quiz API Error:", error);
     }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Quiz generation error:", error);
     throw error;
   }
 }

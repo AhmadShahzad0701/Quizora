@@ -1,6 +1,7 @@
 "use client";
 import { LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { evaluateAnswer } from "@/services/evaluationService";
 
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
@@ -9,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import TeacherNavbar from "@/components/navigation/TeacherNavbar";
 import {
-  BarChart3,
   Zap,
   Scale,
   ShieldCheck,
@@ -25,44 +25,54 @@ export default function EvaluationPage() {
     student_id: "",
     question_id: "",
     question: "",
+     model_answer: "",
     student_answer: "",
   });
 
-  const handleEvaluate = () => {
-    const payload = {
-      evaluations: [
-        {
-          student_id: form.student_id,
-          question_id: form.question_id,
-          question_type: "descriptive",
-          question: form.question,
-          student_answer: form.student_answer,
-          rubric:
-            mode === "fast"
-              ? {
-                  "Conceptual Understanding": 4,
-                  Clarity: 2,
-                  Completeness: 1,
-                }
-              : mode === "strict"
-              ? {
-                  "Conceptual Understanding": 6,
-                  Clarity: 3,
-                  Completeness: 1,
-                }
-              : {
-                  "Conceptual Understanding": 5,
-                  Clarity: 3,
-                  Completeness: 2,
-                },
-          max_score: 10,
-        },
-      ],
-    };
+  const [isEvaluating, setIsEvaluating] = useState(false);
 
-    console.log("Evaluation Payload:", payload);
+const handleEvaluate = async () => {
+  setIsEvaluating(true);
+
+  const payload = {
+  evaluations: [
+    {
+      student_id: form.student_id,
+      question_id: form.question_id,
+      question_type: "descriptive" as const,
+      question: form.question,
+
+      model_answer: form.model_answer,   // 👈 ADD THIS
+      student_answer: form.student_answer,
+
+      rubric:
+        mode === "fast"
+          ? { "Conceptual Understanding": 4, Clarity: 2, Completeness: 1 }
+          : mode === "strict"
+          ? { "Conceptual Understanding": 6, Clarity: 3, Completeness: 1 }
+          : { "Conceptual Understanding": 5, Clarity: 3, Completeness: 2 },
+
+      max_score: 10,
+    },
+  ],
+};
+
+
+  try {
+    const result = await evaluateAnswer(payload);
+
+    // 🧠 Save result temporarily (localStorage / state / context)
+    localStorage.setItem("evaluationResult", JSON.stringify(result));
+
     router.push("/evaluation/results");
-  };
+  } catch (err) {
+    console.error("Evaluation failed", err);
+    alert("Evaluation failed. Please try again.");
+  } finally {
+    setIsEvaluating(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -150,18 +160,27 @@ export default function EvaluationPage() {
                 setForm({ ...form, student_answer: e.target.value })
               }
             />
+            <Textarea
+  placeholder="Expected / Model Answer (Teacher Answer)"
+  value={form.model_answer}
+  onChange={(e) =>
+    setForm({ ...form, model_answer: e.target.value })
+  }
+/>
+
           </Card>
 
           {/* ACTION */}
           <div className="flex justify-end">
             <Button
-              size="lg"
-              className="bg-gradient-primary hover:opacity-90"
-              onClick={handleEvaluate}
-            >
-              <BarChart3 className="w-5 h-5 mr-2" />
-              Start Evaluation
-            </Button>
+  size="lg"
+  disabled={isEvaluating}
+  onClick={handleEvaluate}
+  className="bg-gradient-primary hover:opacity-90"
+>
+  {isEvaluating ? "Evaluating..." : "Start Evaluation"}
+</Button>
+
           </div>
 
         </div>

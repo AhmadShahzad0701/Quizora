@@ -1,4 +1,0 @@
-
-User-agent: *
-Allow: /
-Sitemap: https://text2question.miguel07code.dev/sitemap.xml
